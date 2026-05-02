@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resource Library</title>
+<base target="_blank">
+<style>
+@font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/dw5/Metropolis@1.1.0/Metropolis-Light.woff2') format('woff2'); font-weight: 300; }
+@font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/dw5/Metropolis@1.1.0/Metropolis-Regular.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/dw5/Metropolis@1.1.0/Metropolis-Medium.woff2') format('woff2'); font-weight: 500; }
+@font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/dw5/Metropolis@1.1.0/Metropolis-SemiBold.woff2') format('woff2'); font-weight: 600; }
+@font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/dw5/Metropolis@1.1.0/Metropolis-Bold.woff2') format('woff2'); font-weight: 700; }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #FFFFFF;
+  --forest: #00634E;
+  --forest-dark: #004a3a;
+  --forest-light: #e6f4f0;
+  --cobalt: #2854CC;
+  --cobalt-light: #eef2fd;
+  --sky-light: #edfcfd;
+  --gray-50: #f8f8f6;
+  --gray-100: #eeede8;
+  --gray-200: #d5d4cd;
+  --gray-400: #9a9890;
+  --gray-700: #3e3d38;
+  --gray-900: #1a1a18;
+  --r: 8px;
+  --rs: 5px;
+}
+
+body { font-family: 'Metropolis', sans-serif; background: var(--white); color: var(--gray-900); font-size: 15px; line-height: 1.6; }
+
+/* HEADER */
+.lib-header { background: var(--forest); padding: 1.75rem 1.5rem 1.4rem; position: relative; overflow: hidden; }
+.lib-header::before { content:''; position:absolute; top:-40px; right:-40px; width:180px; height:180px; border-radius:50%; background:rgba(124,233,240,0.13); }
+.lib-header h1 { font-size:2.75rem; font-weight:700; color:var(--white); position:relative; z-index:1; }
+.lib-header p  { font-size:1.25rem; font-weight:300; color:rgba(255,255,255,0.75); margin-top:0.25rem; position:relative; z-index:1; }
+
+/* CONTROLS */
+.lib-controls { padding:1rem 1.5rem 0.75rem; border-bottom:1px solid var(--gray-100); background:var(--white); display:flex; flex-direction:column; gap:0.65rem; }
+.search-row { display:flex; gap:0.5rem; align-items:center; }
+.search-box { flex:1; padding:0.5rem 0.8rem; border:1px solid var(--gray-200); border-radius:var(--rs); font-family:'Metropolis',sans-serif; font-size:0.9rem; color:var(--gray-900); background:var(--gray-50); outline:none; transition:border-color 0.15s,background 0.15s; }
+.search-box:focus { border-color:var(--cobalt); background:var(--white); }
+.type-toggle { display:flex; border:1px solid var(--gray-200); border-radius:var(--rs); overflow:hidden; }
+.type-btn { padding:0.45rem 0.85rem; font-family:'Metropolis',sans-serif; font-size:0.8rem; font-weight:500; border:none; background:var(--white); color:var(--gray-400); cursor:pointer; transition:background 0.15s,color 0.15s; white-space:nowrap; }
+.type-btn.active { background:var(--forest); color:var(--white); }
+.tag-select { padding:0.45rem 0.85rem; border:1px solid var(--gray-200); border-radius:var(--rs); background:var(--white); font-family:'Metropolis',sans-serif; font-size:0.82rem; font-weight:500; color:var(--gray-700); cursor:pointer; outline:none; transition:border-color 0.15s; }
+.tag-select:focus { border-color:var(--cobalt); }
+.tag-select.has-active { border-color:var(--cobalt); color:var(--cobalt); background:var(--cobalt-light); }
+.active-tags-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:0.5rem; }
+.active-chip { display:flex; align-items:center; gap:0.25rem; padding:0.18rem 0.35rem 0.18rem 0.6rem; border-radius:50px; font-size:0.73rem; font-weight:500; background:var(--cobalt-light); color:var(--cobalt); border:1.5px solid var(--cobalt); }
+.active-chip-x { background:none; border:none; font-size:11px; color:var(--cobalt); cursor:pointer; line-height:1; padding:0 2px; font-family:'Metropolis',sans-serif; }
+
+.section-heading { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--gray-400); padding:0.5rem 0 0.35rem; margin-top:0.5rem; border-bottom:1px solid var(--gray-100); margin-bottom:0.1rem; }
+.section-heading:first-child { margin-top:0; }
+
+/* RESOURCE LIST */
+.lib-body { padding:0.9rem 1.5rem 1.5rem; }
+.results-count { font-size:0.78rem; color:var(--gray-400); margin-bottom:0.75rem; }
+.resource-list { display:flex; flex-direction:column; gap:0.6rem; }
+.resource-card { background:var(--white); border:1px solid var(--gray-100); border-radius:var(--r); padding:0.9rem 1rem; transition:border-color 0.15s; }
+.resource-card:hover { border-color:var(--gray-200); }
+.card-top { display:flex; align-items:flex-start; gap:0.7rem; }
+.card-badge { flex-shrink:0; margin-top:2px; width:26px; height:26px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:12px; }
+.badge-pdf   { background:var(--forest-light); color:var(--forest); }
+.badge-video { background:var(--cobalt-light);  color:var(--cobalt); }
+.card-title-area { flex:1; min-width:0; }
+.card-title { font-size:0.97rem; font-weight:600; color:var(--gray-900); line-height:1.3; margin-bottom:0.3rem; }
+.card-tags  { display:flex; flex-wrap:wrap; gap:0.25rem; }
+.card-tag   { font-size:0.68rem; font-weight:500; padding:0.12rem 0.45rem; border-radius:50px; background:var(--sky-light); color:#0a7a80; }
+.card-actions { display:flex; align-items:center; gap:0.45rem; margin-top:0.55rem; }
+.card-link { font-size:0.8rem; font-weight:500; padding:0.3rem 0.75rem; border-radius:var(--rs); text-decoration:none; border:none; cursor:pointer; font-family:'Metropolis',sans-serif; }
+.card-link.pdf-l   { background:var(--forest); color:var(--white); }
+.card-link.pdf-l:hover { background:var(--forest-dark); }
+.card-link.vid-l   { background:var(--cobalt); color:var(--white); }
+.card-link.vid-l:hover { background:#1e3ea0; }
+.desc-btn { font-size:0.78rem; font-weight:400; padding:0.28rem 0.65rem; border-radius:var(--rs); border:1px solid var(--gray-200); background:none; color:var(--gray-400); cursor:pointer; font-family:'Metropolis',sans-serif; }
+.desc-btn:hover { border-color:var(--gray-400); color:var(--gray-700); }
+.card-desc { display:none; margin-top:0.55rem; padding:0.55rem 0.75rem; background:var(--gray-50); border-left:3px solid var(--forest); border-radius:0 var(--rs) var(--rs) 0; font-size:0.84rem; color:var(--gray-700); line-height:1.6; }
+.card-desc.open { display:block; }
+.empty-state { text-align:center; padding:2.5rem 1rem; color:var(--gray-400); }
+.empty-state strong { display:block; font-size:1rem; font-weight:600; margin-bottom:0.3rem; color:var(--gray-700); }
+
+/* ADMIN TRIGGER */
+.admin-footer { padding:0.4rem 1.5rem 0.75rem; text-align:right; }
+.admin-trigger-btn { font-size:0.7rem; font-weight:500; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray-200); background:none; border:none; cursor:pointer; font-family:'Metropolis',sans-serif; }
+.admin-trigger-btn:hover { color:var(--gray-400); }
+
+/* ADMIN PANEL */
+.admin-panel { display:none; border-top:2px solid var(--forest); background:var(--gray-50); padding:1.25rem 1.5rem 2rem; }
+.admin-panel.open { display:block; }
+.admin-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; }
+.admin-bar h2 { font-size:1.1rem; font-weight:700; color:var(--forest); }
+.admin-logout { font-size:0.78rem; font-weight:500; padding:0.3rem 0.7rem; border-radius:var(--rs); border:1px solid var(--gray-200); background:var(--white); color:var(--gray-700); cursor:pointer; font-family:'Metropolis',sans-serif; }
+
+/* LOGIN BOX */
+.login-box { max-width:320px; margin:0 auto; background:var(--white); border:1px solid var(--gray-200); border-radius:var(--r); padding:1.5rem; }
+.login-box h3 { font-size:1rem; font-weight:700; color:var(--forest); margin-bottom:1rem; }
+
+/* ADMIN TABS */
+.admin-tabs { display:flex; border-bottom:2px solid var(--gray-200); margin-bottom:1.25rem; }
+.atab { padding:0.45rem 1rem; font-size:0.83rem; font-weight:500; background:none; border:none; color:var(--gray-400); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; font-family:'Metropolis',sans-serif; }
+.atab.on { color:var(--forest); border-bottom-color:var(--forest); }
+.asection { display:none; }
+.asection.on { display:block; }
+
+/* FORMS */
+.aform { display:flex; flex-direction:column; gap:0.7rem; }
+.arow  { display:flex; gap:0.5rem; }
+.arow .afield { flex:1; }
+.afield { display:flex; flex-direction:column; gap:0.25rem; }
+.alabel { font-size:0.73rem; font-weight:600; color:var(--gray-700); text-transform:uppercase; letter-spacing:0.04em; }
+.ainput { padding:0.48rem 0.75rem; border:1px solid var(--gray-200); border-radius:var(--rs); font-family:'Metropolis',sans-serif; font-size:0.88rem; color:var(--gray-900); background:var(--white); outline:none; transition:border-color 0.15s; }
+.ainput:focus { border-color:var(--cobalt); }
+textarea.ainput { resize:vertical; min-height:60px; }
+.tag-picker-grid { display:flex; flex-wrap:wrap; gap:0.3rem; padding:0.5rem 0.6rem; border:1px solid var(--gray-200); border-radius:var(--rs); background:var(--white); min-height:46px; }
+.tpchip { padding:0.2rem 0.6rem; border-radius:50px; font-size:0.73rem; font-weight:500; cursor:pointer; background:var(--gray-100); color:var(--gray-700); border:1.5px solid transparent; user-select:none; transition:all 0.12s; }
+.tpchip.on { background:var(--cobalt-light); border-color:var(--cobalt); color:var(--cobalt); }
+.abtn-row { display:flex; gap:0.4rem; justify-content:flex-end; margin-top:0.25rem; }
+.btn-p { padding:0.5rem 1.1rem; background:var(--forest); color:var(--white); border:none; border-radius:var(--rs); font-family:'Metropolis',sans-serif; font-size:0.85rem; font-weight:600; cursor:pointer; }
+.btn-p:hover { background:var(--forest-dark); }
+.btn-s { padding:0.5rem 1.1rem; background:var(--white); color:var(--gray-700); border:1px solid var(--gray-200); border-radius:var(--rs); font-family:'Metropolis',sans-serif; font-size:0.85rem; font-weight:500; cursor:pointer; }
+.btn-s:hover { background:var(--gray-100); }
+.btn-d { padding:0.5rem 1rem; background:#fde8e8; color:#b91c1c; border:none; border-radius:var(--rs); font-family:'Metropolis',sans-serif; font-size:0.83rem; font-weight:500; cursor:pointer; }
+.btn-d:hover { background:#fcc; }
+.toast { display:none; font-size:0.8rem; font-weight:500; padding:0.4rem 0.75rem; border-radius:var(--rs); background:var(--forest-light); color:var(--forest); margin-top:0.4rem; }
+.toast.err { background:#fde8e8; color:#b91c1c; }
+
+/* MANAGE LIST */
+.manage-list { display:flex; flex-direction:column; gap:0.4rem; margin-top:0.5rem; }
+.mrow { display:flex; align-items:center; gap:0.5rem; padding:0.55rem 0.75rem; background:var(--white); border:1px solid var(--gray-100); border-radius:var(--rs); font-size:0.82rem; }
+.mrow-title { flex:1; font-weight:500; color:var(--gray-900); }
+.mtype { font-size:0.7rem; font-weight:600; padding:0.12rem 0.45rem; border-radius:50px; }
+.mtype.pdf   { background:var(--forest-light); color:var(--forest); }
+.mtype.video { background:var(--cobalt-light);  color:var(--cobalt); }
+.medit-btn { font-size:0.78rem; font-weight:500; padding:0.25rem 0.6rem; border-radius:var(--rs); border:1px solid var(--cobalt); color:var(--cobalt); background:none; cursor:pointer; font-family:'Metropolis',sans-serif; }
+.medit-btn:hover { background:var(--cobalt-light); }
+.edit-box { display:none; margin-top:0.35rem; padding:1rem; border:2px solid var(--cobalt); border-radius:var(--r); background:var(--white); }
+.edit-box.open { display:block; }
+.edit-box-title { font-size:0.78rem; font-weight:700; color:var(--cobalt); margin-bottom:0.75rem; text-transform:uppercase; letter-spacing:0.04em; }
+
+/* TAG MANAGER */
+.add-tag-row { display:flex; gap:0.5rem; margin-bottom:0.75rem; }
+.add-tag-row .ainput { flex:1; }
+.tags-grid { display:flex; flex-wrap:wrap; gap:0.35rem; }
+.tagitem { display:flex; align-items:center; gap:0.3rem; background:var(--sky-light); border:1px solid #b3eef2; border-radius:50px; padding:0.2rem 0.35rem 0.2rem 0.65rem; font-size:0.76rem; font-weight:500; color:#0a7a80; }
+.tagdel { background:rgba(0,0,0,0.1); border:none; border-radius:50%; width:16px; height:16px; font-size:9px; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#0a7a80; font-family:'Metropolis',sans-serif; }
+</style>
+</head>
+<body>
+
+<!-- PUBLIC LIBRARY -->
+<div class="lib-header">
+  <h1>Resource Library</h1>
+  <p>Fact sheets and webinars on gun violence prevention</p>
+</div>
+
+<div class="lib-controls">
+  <div class="search-row">
+    <input class="search-box" id="search" type="text" placeholder="Search resources…" oninput="render()">
+    <div class="type-toggle">
+      <button class="type-btn active" onclick="setType('all',this)">All</button>
+      <button class="type-btn" onclick="setType('pdf',this)">Fact Sheets</button>
+      <button class="type-btn" onclick="setType('video',this)">Webinars</button>
+    </div>
+  </div>
+  <div>
+    <select class="tag-select" id="tag-select" onchange="selectTag(this.value)">
+      <option value="">Filter by topic…</option>
+    </select>
+    <div class="active-tags-row" id="active-chips"></div>
+  </div>
+</div>
+
+<div class="lib-body">
+  <div class="results-count" id="count"></div>
+  <div class="resource-list" id="res-list"></div>
+</div>
+
+<div class="admin-footer">
+  <button class="admin-trigger-btn" onclick="showLogin()">Admin</button>
+</div>
+
+<!-- ADMIN PANEL (inline, no modals) -->
+<div class="admin-panel" id="admin-panel">
+  <div class="admin-bar">
+    <h2>Admin Panel</h2>
+    <button class="admin-logout" onclick="logout()">Sign Out</button>
+  </div>
+
+  <!-- Login -->
+  <div id="login-section">
+    <div class="login-box">
+      <h3>Enter Admin Password</h3>
+      <div class="afield" style="margin-bottom:0.65rem">
+        <label class="alabel">Password</label>
+        <input class="ainput" type="password" id="pw-input" placeholder="Password…" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="toast err" id="login-err">Incorrect password.</div>
+      <div style="margin-top:0.65rem">
+        <button class="btn-p" style="width:100%" onclick="doLogin()">Sign In</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin content -->
+  <div id="admin-content" style="display:none">
+    <div class="admin-tabs">
+      <button class="atab on" onclick="atab('add',this)">Add Resource</button>
+      <button class="atab" onclick="atab('manage',this)">Manage Resources</button>
+      <button class="atab" onclick="atab('tags',this)">Manage Tags</button>
+    </div>
+
+    <!-- ADD -->
+    <div class="asection on" id="sec-add">
+      <div class="aform">
+        <div class="afield">
+          <label class="alabel">Title *</label>
+          <input class="ainput" id="a-title" type="text" placeholder="Resource title">
+        </div>
+        <div class="arow">
+          <div class="afield">
+            <label class="alabel">Type *</label>
+            <select class="ainput" id="a-type">
+              <option value="pdf">Fact Sheet (PDF)</option>
+              <option value="video">Webinar (YouTube)</option>
+            </select>
+          </div>
+          <div class="afield">
+            <label class="alabel">URL *</label>
+            <input class="ainput" id="a-url" type="text" placeholder="https://…">
+          </div>
+        </div>
+        <div class="afield">
+          <label class="alabel">Description</label>
+          <textarea class="ainput" id="a-desc" placeholder="Brief description (optional)"></textarea>
+        </div>
+        <div class="afield">
+          <label class="alabel">Topic Tags</label>
+          <div class="tag-picker-grid" id="a-tags"></div>
+        </div>
+        <div class="abtn-row">
+          <button class="btn-s" onclick="clearAdd()">Clear</button>
+          <button class="btn-p" onclick="addResource()">Add Resource</button>
+        </div>
+        <div class="toast" id="add-toast">Resource added!</div>
+      </div>
+    </div>
+
+    <!-- MANAGE -->
+    <div class="asection" id="sec-manage">
+      <p style="font-size:0.8rem;color:var(--gray-400);margin-bottom:0.65rem">Click Edit on any resource to update or delete it.</p>
+      <div class="manage-list" id="manage-list"></div>
+    </div>
+
+    <!-- TAGS -->
+    <div class="asection" id="sec-tags">
+      <div class="add-tag-row">
+        <input class="ainput" id="new-tag" type="text" placeholder="New tag name…" onkeydown="if(event.key==='Enter')addTag()">
+        <button class="btn-p" onclick="addTag()">Add Tag</button>
+      </div>
+      <div class="alabel" style="margin-bottom:0.4rem">Current Tags</div>
+      <div class="tags-grid" id="tags-grid"></div>
+      <div class="toast" id="tag-toast" style="margin-top:0.5rem">Tag saved!</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PW = 'gvpc2024'; // ← change this to your password
+
+let tags = [
+  'domestic violence','community violence','mass shootings',
+  'Emergency Response Orders','police shootings','immigration',
+  'suicide','firearm industry','youth','survivors','schools',
+  'policy','healthcare'
+];
+
+let resources = [
+  {id:1,  title:'Gun Violence in Massachusetts 101', type:'pdf', url:'#', tags:['policy','community violence'], desc:'An overview of gun violence in Massachusetts, covering key statistics, trends, and the policy landscape.'},
+  {id:2,  title:'About the Coalition', type:'pdf', url:'#', tags:['policy'], desc:'Learn about our organization, our mission, and our work to prevent gun violence across Massachusetts.'},
+  {id:3,  title:'Guns and Suicide', type:'pdf', url:'#', tags:['suicide'], desc:'Explores the connection between firearm access and suicide risk, with data and prevention strategies.'},
+  {id:4,  title:'Guns and Domestic Violence', type:'pdf', url:'#', tags:['domestic violence'], desc:'Examines how firearms elevate the danger in domestic violence situations and what laws can help.'},
+  {id:5,  title:'Guns and Mass Shootings', type:'pdf', url:'#', tags:['mass shootings','policy'], desc:'Reviews the data on mass shootings in the US, common factors, and evidence-based policy responses.'},
+  {id:6,  title:'Guns and Police Shootings', type:'pdf', url:'#', tags:['police shootings'], desc:'Analyzes police use-of-force incidents involving firearms and the systemic factors involved.'},
+  {id:7,  title:'Guns and Community Violence', type:'pdf', url:'#', tags:['community violence'], desc:'Focuses on everyday gun violence in communities and intervention strategies that work.'},
+  {id:8,  title:'Guns and Emergency Response Orders', type:'pdf', url:'#', tags:['Emergency Response Orders','policy'], desc:'An explanation of Extreme Risk Protection Orders (ERPOs) and how they are used in Massachusetts.'},
+  {id:9,  title:'The Intersection of Gun Violence, Immigration and Federal Agencies', type:'pdf', url:'#', tags:['immigration','policy'], desc:'Explores the relationship between immigration enforcement, federal agencies, and gun violence.'},
+  {id:10, title:'The Impact of Guns on Healthcare in Massachusetts', type:'pdf', url:'#', tags:['healthcare'], desc:'Documents the toll gun violence takes on the healthcare system and providers in Massachusetts.'},
+  {id:11, title:'The Impact of Guns on Schools in Massachusetts', type:'pdf', url:'#', tags:['schools','youth'], desc:'Examines how gun violence affects educational environments and students across the state.'},
+  {id:12, title:'The Impact of Guns on Businesses in Massachusetts', type:'pdf', url:'#', tags:['policy','community violence'], desc:'Looks at the economic cost of gun violence on businesses and local economies.'},
+  {id:13, title:'Why Young People Carry Guns', type:'video', url:'#', tags:['youth','community violence'], desc:'A conversation examining the social and environmental factors that lead young people to carry firearms.'},
+  {id:14, title:'The Intersection of Guns and Domestic Violence', type:'video', url:'#', tags:['domestic violence'], desc:'Experts discuss how firearms increase lethality in domestic violence and what policies can help.'},
+  {id:15, title:'The Former White House Office of Gun Violence Prevention', type:'video', url:'#', tags:['policy'], desc:'An inside look at the work and priorities of the White House Office of Gun Violence Prevention.'},
+  {id:16, title:'Firearm Industry Accountability', type:'video', url:'#', tags:['firearm industry','policy'], desc:'A webinar on holding the gun industry legally and financially accountable for harm caused by its products.'},
+  {id:17, title:'How Guns Fuel Violence Abroad and Drive Migration', type:'video', url:'#', tags:['immigration','community violence'], desc:'Explores the global arms pipeline and how US-sourced guns contribute to violence and forced migration.'},
+  {id:18, title:'The Intersection of Domestic Violence and Community Violence', type:'video', url:'#', tags:['domestic violence','community violence'], desc:'Examines the overlap between intimate partner violence and broader community violence patterns.'},
+  {id:19, title:'Firearms and Family Violence', type:'video', url:'#', tags:['domestic violence'], desc:'Discusses how firearm access within families increases risks of lethal domestic and family violence.'},
+  {id:20, title:'The Community Violence Intervention Action Plan', type:'video', url:'#', tags:['community violence','policy'], desc:'Presents a comprehensive action plan for community-based violence intervention and prevention.'},
+  {id:21, title:'Focusing on Survivors: A Conversation with the Louis D Brown Peace Institute', type:'video', url:'#', tags:['survivors','community violence'], desc:'Centering the voices of survivors, this webinar highlights the work of the Louis D Brown Peace Institute.'},
+  {id:22, title:'Bridging Healthcare and Safety: An Extreme Risk Protection Order Overview', type:'video', url:'#', tags:['healthcare','Emergency Response Orders'], desc:'Healthcare providers and legal experts discuss the role of ERPOs in preventing gun violence.'},
+  {id:23, title:'Focusing on Educators: A Conversation with Teachers Unify', type:'video', url:'#', tags:['schools','youth'], desc:"Teachers discuss gun violence's impact on education and their advocacy efforts with Teachers Unify."},
+  {id:24, title:'Effects of a Hospital Based Violence Intervention Program on Community Violence', type:'video', url:'#', tags:['healthcare','community violence','survivors'], desc:'Research on how hospital-based intervention programs reduce community violence and recidivism.'},
+  {id:25, title:'ICE and Gun Violence in Massachusetts', type:'video', url:'#', tags:['immigration','police shootings'], desc:'Explores the intersection of federal immigration enforcement and gun violence in Massachusetts.'},
+  {id:26, title:'The Raise the Age Bill – A Conversation with Citizens for Juvenile Justice', type:'video', url:'#', tags:['youth','policy'], desc:'A discussion on raising the age of juvenile justice jurisdiction and its connection to youth gun violence.'},
+];
+
+let nextId = 27, activeType = 'all', activeTags = [], loggedIn = false;
+
+// ── PUBLIC ──
+function renderPubTags() {
+  // rebuild select options
+  const sel = document.getElementById('tag-select');
+  if (sel) {
+    sel.innerHTML = '<option value="">Filter by topic…</option>' +
+      tags.map(t => `<option value="${t}">${activeTags.includes(t) ? '\u2713 ' : ''}${t}</option>`).join('');
+    sel.value = '';
+    sel.classList.toggle('has-active', activeTags.length > 0);
+  }
+  // active chips
+  const chips = document.getElementById('active-chips');
+  if (chips) {
+    chips.innerHTML = activeTags.map(t =>
+      `<span class="active-chip">${t}<button class="active-chip-x" onclick="removeTag2(${JSON.stringify(t)})">&#10005;</button></span>`
+    ).join('');
+  }
+}
+function selectTag(val) {
+  if (!val) return;
+  if (!activeTags.includes(val)) activeTags.push(val);
+  renderPubTags(); render();
+}
+function removeTag2(t) {
+  activeTags = activeTags.filter(x => x !== t);
+  renderPubTags(); render();
+}
+function toggleTag(t) {
+  activeTags = activeTags.includes(t) ? activeTags.filter(x=>x!==t) : [...activeTags,t];
+  renderPubTags(); render();
+}
+function setType(type, btn) {
+  activeType = type;
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); render();
+}
+function render() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const filtered = resources.filter(r => {
+    const tOk = activeType==='all' || r.type===activeType;
+    const gOk = activeTags.length===0 || activeTags.every(t=>r.tags.includes(t));
+    const sOk = !q || r.title.toLowerCase().includes(q) || (r.desc&&r.desc.toLowerCase().includes(q)) || r.tags.some(t=>t.toLowerCase().includes(q));
+    return tOk && gOk && sOk;
+  });
+  document.getElementById('count').textContent = filtered.length===resources.length
+    ? `${resources.length} resources` : `${filtered.length} of ${resources.length} resources`;
+  const el = document.getElementById('res-list');
+  if (!filtered.length) { el.innerHTML='<div class="empty-state"><strong>No resources found</strong>Try adjusting your filters or search.</div>'; return; }
+  el.innerHTML = filtered.map(r => {
+    const v = r.type==='video', hasDesc = r.desc&&r.desc.trim();
+    return `<div class="resource-card">
+      <div class="card-top">
+        <div class="card-badge ${v?'badge-video':'badge-pdf'}">${v?'&#9654;':'&#8595;'}</div>
+        <div class="card-title-area">
+          <div class="card-title">${r.title}</div>
+          <div class="card-tags">${r.tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a class="card-link ${v?'vid-l':'pdf-l'}" href="${r.url === '#' ? '#' : r.url}" target="_blank" rel="noopener noreferrer">${v?'Watch Webinar':'View PDF'}</a>
+        ${hasDesc?`<button class="desc-btn" onclick="toggleDesc(${r.id},this)">About &#9660;</button>`:''}
+      </div>
+      ${hasDesc?`<div class="card-desc" id="desc-${r.id}">${r.desc}</div>`:''}
+    </div>`;
+  }).join('');
+}
+function toggleDesc(id, btn) {
+  const el = document.getElementById('desc-'+id);
+  if (!el) return;
+  const open = el.classList.toggle('open');
+  btn.innerHTML = open ? 'About &#9650;' : 'About &#9660;';
+}
+
+// ── LOGIN ──
+function showLogin() {
+  const p = document.getElementById('admin-panel');
+  p.classList.toggle('open');
+  if (p.classList.contains('open') && !loggedIn) {
+    p.scrollIntoView({behavior:'smooth'});
+    setTimeout(()=>document.getElementById('pw-input').focus(),100);
+  }
+}
+function doLogin() {
+  const val = document.getElementById('pw-input').value;
+  const err = document.getElementById('login-err');
+  if (val===PW) {
+    loggedIn=true;
+    document.getElementById('login-section').style.display='none';
+    document.getElementById('admin-content').style.display='block';
+    renderAdminAll();
+  } else {
+    err.style.display='block';
+    document.getElementById('pw-input').value='';
+    setTimeout(()=>err.style.display='none',2500);
+  }
+}
+function logout() {
+  loggedIn=false;
+  document.getElementById('pw-input').value='';
+  document.getElementById('admin-content').style.display='none';
+  document.getElementById('login-section').style.display='block';
+  document.getElementById('admin-panel').classList.remove('open');
+}
+
+// ── ADMIN ──
+function atab(name, btn) {
+  document.querySelectorAll('.asection').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.atab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sec-'+name).classList.add('on');
+  btn.classList.add('on');
+}
+function renderAdminAll() { renderAddPicker(); renderManageList(); renderTagsGrid(); }
+
+// Tag pickers
+function buildPicker(cid, selected) {
+  const el = document.getElementById(cid);
+  if (!el) return;
+  el.innerHTML = tags.map(t =>
+    `<span class="tpchip${selected.includes(t)?' on':''}" onclick="this.classList.toggle('on')">${t}</span>`
+  ).join('');
+}
+function getPickerTags(cid) {
+  return [...document.querySelectorAll('#'+cid+' .tpchip.on')].map(c=>c.textContent);
+}
+function renderAddPicker() { buildPicker('a-tags',[]); }
+
+// Add resource
+function clearAdd() {
+  ['a-title','a-url','a-desc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('a-type').value='pdf';
+  renderAddPicker();
+}
+function addResource() {
+  const title=document.getElementById('a-title').value.trim();
+  const url=document.getElementById('a-url').value.trim();
+  if (!title||!url){alert('Please enter a title and URL.');return;}
+  resources.push({id:nextId++,title,type:document.getElementById('a-type').value,url,tags:getPickerTags('a-tags'),desc:document.getElementById('a-desc').value.trim()});
+  clearAdd(); render(); renderManageList();
+  const t=document.getElementById('add-toast');
+  t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
+}
+
+// Manage resources
+function renderManageList() {
+  const el=document.getElementById('manage-list');
+  if (!el) return;
+  if (!resources.length){el.innerHTML='<p style="font-size:0.82rem;color:var(--gray-400)">No resources yet.</p>';return;}
+  el.innerHTML=resources.map(r=>`
+    <div>
+      <div class="mrow">
+        <span class="mtype ${r.type}">${r.type==='pdf'?'PDF':'Video'}</span>
+        <span class="mrow-title">${r.title}</span>
+        <span style="font-size:0.72rem;color:var(--gray-400)">${r.tags.slice(0,2).join(', ')}${r.tags.length>2?'…':''}</span>
+        <button class="medit-btn" onclick="openEdit(${r.id})">Edit</button>
+      </div>
+      <div class="edit-box" id="edit-${r.id}">
+        <div class="edit-box-title">Editing resource</div>
+        <div class="aform">
+          <div class="afield">
+            <label class="alabel">Title *</label>
+            <input class="ainput" id="et-title-${r.id}" value="${r.title.replace(/"/g,'&quot;')}">
+          </div>
+          <div class="arow">
+            <div class="afield">
+              <label class="alabel">Type</label>
+              <select class="ainput" id="et-type-${r.id}">
+                <option value="pdf" ${r.type==='pdf'?'selected':''}>Fact Sheet (PDF)</option>
+                <option value="video" ${r.type==='video'?'selected':''}>Webinar (YouTube)</option>
+              </select>
+            </div>
+            <div class="afield">
+              <label class="alabel">URL</label>
+              <input class="ainput" id="et-url-${r.id}" value="${r.url.replace(/"/g,'&quot;')}">
+            </div>
+          </div>
+          <div class="afield">
+            <label class="alabel">Description</label>
+            <textarea class="ainput" id="et-desc-${r.id}">${r.desc||''}</textarea>
+          </div>
+          <div class="afield">
+            <label class="alabel">Topic Tags</label>
+            <div class="tag-picker-grid" id="et-tags-${r.id}"></div>
+          </div>
+          <div class="abtn-row">
+            <button class="btn-d" onclick="deleteRes(${r.id})">Delete</button>
+            <button class="btn-s" onclick="closeEdit(${r.id})">Cancel</button>
+            <button class="btn-p" onclick="saveEdit(${r.id})">Save Changes</button>
+          </div>
+          <div class="toast" id="et-toast-${r.id}">Saved!</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function openEdit(id) {
+  document.querySelectorAll('.edit-box.open').forEach(b=>b.classList.remove('open'));
+  const box=document.getElementById('edit-'+id);
+  box.classList.add('open');
+  buildPicker('et-tags-'+id, resources.find(r=>r.id===id).tags);
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function closeEdit(id){ document.getElementById('edit-'+id).classList.remove('open'); }
+function saveEdit(id) {
+  const r=resources.find(x=>x.id===id); if(!r) return;
+  r.title=document.getElementById('et-title-'+id).value.trim();
+  r.type=document.getElementById('et-type-'+id).value;
+  r.url=document.getElementById('et-url-'+id).value.trim();
+  r.desc=document.getElementById('et-desc-'+id).value.trim();
+  r.tags=getPickerTags('et-tags-'+id);
+  render(); renderManageList();
+  const t=document.getElementById('et-toast-'+id);
+  if(t){t.style.display='block';setTimeout(()=>{t.style.display='none';closeEdit(id);},1200);}
+}
+function deleteRes(id) {
+  if(!confirm('Delete this resource? This cannot be undone.')) return;
+  resources=resources.filter(r=>r.id!==id);
+  render(); renderManageList();
+}
+
+// Manage tags
+function renderTagsGrid() {
+  const el=document.getElementById('tags-grid'); if(!el) return;
+  el.innerHTML=tags.map(t=>`
+    <div class="tagitem">${t}
+      <button class="tagdel" onclick="removeTag(${JSON.stringify(t)})">&#10005;</button>
+    </div>`).join('');
+}
+function addTag() {
+  const input=document.getElementById('new-tag'), val=input.value.trim();
+  if(!val||tags.includes(val)){input.value='';return;}
+  tags.push(val); input.value='';
+  renderTagsGrid(); renderPubTags(); renderAddPicker(); renderManageList();
+  const t=document.getElementById('tag-toast');
+  t.style.display='block'; setTimeout(()=>t.style.display='none',1500);
+}
+function removeTag(tag) {
+  if(!confirm(`Remove tag "${tag}"? It will be removed from all resources.`)) return;
+  tags=tags.filter(t=>t!==tag);
+  resources.forEach(r=>{r.tags=r.tags.filter(t=>t!==tag);});
+  activeTags=activeTags.filter(t=>t!==tag);
+  renderTagsGrid(); renderPubTags(); render(); renderAddPicker(); renderManageList();
+}
+
+// Init
+renderPubTags();
+render();
+</script>
+</body>
+</html>
