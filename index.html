@@ -4,558 +4,1027 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Resource Library</title>
-<base target="_blank">
 <style>
-@font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/dw5/Metropolis@1.1.0/Metropolis-Light.woff2') format('woff2'); font-weight: 300; }
-@font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/dw5/Metropolis@1.1.0/Metropolis-Regular.woff2') format('woff2'); font-weight: 400; }
-@font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/dw5/Metropolis@1.1.0/Metropolis-Medium.woff2') format('woff2'); font-weight: 500; }
-@font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/dw5/Metropolis@1.1.0/Metropolis-SemiBold.woff2') format('woff2'); font-weight: 600; }
-@font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/dw5/Metropolis@1.1.0/Metropolis-Bold.woff2') format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/nicholasgasior/metropolis@latest/fonts/Metropolis-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/nicholasgasior/metropolis@latest/fonts/Metropolis-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; }
+  @font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/nicholasgasior/metropolis@latest/fonts/Metropolis-SemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; }
+  @font-face { font-family: 'Metropolis'; src: url('https://cdn.jsdelivr.net/gh/nicholasgasior/metropolis@latest/fonts/Metropolis-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+</style>
+<style>
+  :root {
+    --white: #FFFFFF;
+    --green: #00634E;
+    --blue: #2854CC;
+    --cyan: #7CE9F0;
+    --pink: #FFBDF3;
+    --light-bg: #f5f7fa;
+    --border: #e0e4ed;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --tag-bg: #eef2ff;
+    --tag-color: #2854CC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Metropolis', sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ── HEADER ── */
+  .header {
+    background: var(--green);
+    color: #fff;
+    padding: 28px 32px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .header h1 {
+    font-family: 'Metropolis', sans-serif;
+    font-size: 38px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+  }
+  .header p { font-size: 16px; opacity: .75; margin-top: 6px; }
+  #admin-tab-trigger {
+    position: fixed;
+    bottom: -38px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--green);
+    color: rgba(255,255,255,0.5);
+    font-size: 18px;
+    width: 48px;
+    height: 56px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 7px;
+    cursor: pointer;
+    box-shadow: 0 -2px 10px rgba(0,0,0,.15);
+    transition: bottom .3s ease, color .2s;
+    z-index: 500;
+    user-select: none;
+  }
+  #admin-tab-trigger:hover {
+    bottom: 0;
+    color: #fff;
+  }
 
-:root {
-  --white: #FFFFFF;
-  --forest: #00634E;
-  --forest-dark: #004a3a;
-  --forest-light: #e6f4f0;
-  --cobalt: #2854CC;
-  --cobalt-light: #eef2fd;
-  --sky-light: #edfcfd;
-  --gray-50: #f8f8f6;
-  --gray-100: #eeede8;
-  --gray-200: #d5d4cd;
-  --gray-400: #9a9890;
-  --gray-700: #3e3d38;
-  --gray-900: #1a1a18;
-  --r: 8px;
-  --rs: 5px;
-}
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 32px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-bar input[type="text"] {
+    flex: 1; min-width: 200px;
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'Metropolis', sans-serif;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .filter-bar input[type="text"]:focus { border-color: var(--blue); }
 
-body { font-family: 'Metropolis', sans-serif; background: var(--white); color: var(--gray-900); font-size: 15px; line-height: 1.6; }
+  .type-filter {
+    display: flex;
+    gap: 6px;
+  }
+  .type-btn {
+    padding: 8px 14px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-size: 13px;
+    font-family: 'Metropolis', sans-serif;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all .15s;
+  }
+  .type-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
 
-/* HEADER */
-.lib-header { background: var(--forest); padding: 1.75rem 1.5rem 1.4rem; position: relative; overflow: hidden; }
-.lib-header::before { content:''; position:absolute; top:-40px; right:-40px; width:180px; height:180px; border-radius:50%; background:rgba(124,233,240,0.13); }
-.lib-header h1 { font-size:2.75rem; font-weight:700; color:var(--white); position:relative; z-index:1; }
-.lib-header p  { font-size:1.25rem; font-weight:300; color:rgba(255,255,255,0.75); margin-top:0.25rem; position:relative; z-index:1; }
+  /* ── CUSTOM TOPIC DROPDOWN ── */
+  .topic-dropdown-wrap { position: relative; }
+  .topic-dropdown-btn {
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: #fff;
+    font-size: 14px;
+    font-family: 'Metropolis', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 180px;
+    justify-content: space-between;
+    transition: border-color .2s;
+    user-select: none;
+  }
+  .topic-dropdown-btn:hover, .topic-dropdown-btn.open { border-color: var(--blue); }
+  .topic-dropdown-btn .arrow { font-size: 10px; color: var(--muted); transition: transform .2s; }
+  .topic-dropdown-btn.open .arrow { transform: rotate(180deg); }
+  .topic-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    min-width: 220px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.1);
+    z-index: 100;
+    padding: 8px;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+  .topic-dropdown-menu.open { display: block; }
+  .topic-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13.5px;
+    transition: background .15s;
+  }
+  .topic-option:hover { background: var(--tag-bg); }
+  .topic-option input[type="checkbox"] { accent-color: var(--blue); width: 15px; height: 15px; cursor: pointer; }
+  .topic-option.selected { color: var(--blue); font-weight: 500; }
+  .dd-clear {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 7px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 6px;
+    cursor: pointer;
+    border-radius: 0 0 6px 6px;
+    transition: background .15s;
+  }
+  .dd-clear:hover { background: #fafafa; color: var(--text); }
 
-/* CONTROLS */
-.lib-controls { padding:1rem 1.5rem 0.75rem; border-bottom:1px solid var(--gray-100); background:var(--white); display:flex; flex-direction:column; gap:0.65rem; }
-.search-row { display:flex; gap:0.5rem; align-items:center; }
-.search-box { flex:1; padding:0.5rem 0.8rem; border:1px solid var(--gray-200); border-radius:var(--rs); font-family:'Metropolis',sans-serif; font-size:0.9rem; color:var(--gray-900); background:var(--gray-50); outline:none; transition:border-color 0.15s,background 0.15s; }
-.search-box:focus { border-color:var(--cobalt); background:var(--white); }
-.type-toggle { display:flex; border:1px solid var(--gray-200); border-radius:var(--rs); overflow:hidden; }
-.type-btn { padding:0.45rem 0.85rem; font-family:'Metropolis',sans-serif; font-size:0.8rem; font-weight:500; border:none; background:var(--white); color:var(--gray-400); cursor:pointer; transition:background 0.15s,color 0.15s; white-space:nowrap; }
-.type-btn.active { background:var(--forest); color:var(--white); }
-.tag-select { padding:0.45rem 0.85rem; border:1px solid var(--gray-200); border-radius:var(--rs); background:var(--white); font-family:'Metropolis',sans-serif; font-size:0.82rem; font-weight:500; color:var(--gray-700); cursor:pointer; outline:none; transition:border-color 0.15s; }
-.tag-select:focus { border-color:var(--cobalt); }
-.tag-select.has-active { border-color:var(--cobalt); color:var(--cobalt); background:var(--cobalt-light); }
-.active-tags-row { display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:0.5rem; }
-.active-chip { display:flex; align-items:center; gap:0.25rem; padding:0.18rem 0.35rem 0.18rem 0.6rem; border-radius:50px; font-size:0.73rem; font-weight:500; background:var(--cobalt-light); color:var(--cobalt); border:1.5px solid var(--cobalt); }
-.active-chip-x { background:none; border:none; font-size:11px; color:var(--cobalt); cursor:pointer; line-height:1; padding:0 2px; font-family:'Metropolis',sans-serif; }
+  /* ── GRID ── */
+  .grid-wrap { padding: 24px 32px; }
+  .results-count { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: box-shadow .2s, transform .2s;
+  }
+  .card:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); transform: translateY(-1px); }
+  .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .card-title { font-size: 15px; font-weight: 600; line-height: 1.35; color: var(--text); }
+  .card-type {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .type-factsheet { background: #e8f5e9; color: #2e7d32; }
+  .type-webinar   { background: #e3f2fd; color: #1565c0; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-size: 11.5px;
+    background: var(--tag-bg);
+    color: var(--tag-color);
+    padding: 3px 9px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .tag:hover { background: #dce5ff; }
+  .card-desc-wrap { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+  .card-desc-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .card-desc-text.expanded { display: block; }
+  .expand-btn {
+    font-size: 12px;
+    color: var(--blue);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: 3px;
+    font-family: 'Metropolis', sans-serif;
+  }
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 2px;
+    transition: opacity .15s;
+    width: fit-content;
+    font-family: 'Metropolis', sans-serif;
+  }
+  .card-link:hover { opacity: .85; }
+  .pdf-l { background: var(--green); color: #fff; }
+  .vid-l { background: var(--blue); color: #fff; }
+  .no-link { background: #e5e7eb; color: var(--muted); cursor: default; pointer-events: none; }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); grid-column: 1/-1; }
+  .empty-state h3 { font-size: 17px; margin-bottom: 6px; color: var(--text); }
 
-.section-heading { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--gray-400); padding:0.5rem 0 0.35rem; margin-top:0.5rem; border-bottom:1px solid var(--gray-100); margin-bottom:0.1rem; }
-.section-heading:first-child { margin-top:0; }
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.45); z-index: 1000;
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 12px;
+    width: 100%; max-width: 680px;
+    max-height: 92vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+  }
+  .modal-head {
+    background: var(--green);
+    color: #fff;
+    padding: 20px 24px;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-head h2 { font-family: 'Metropolis', sans-serif; font-weight: 400; font-size: 20px; }
+  .modal-close { background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; line-height: 1; }
+  .modal-body { padding: 24px; }
 
-/* RESOURCE LIST */
-.lib-body { padding:0.9rem 1.5rem 1.5rem; }
-.results-count { font-size:0.78rem; color:var(--gray-400); margin-bottom:0.75rem; }
-.resource-list { display:flex; flex-direction:column; gap:0.6rem; }
-.resource-card { background:var(--white); border:1px solid var(--gray-100); border-radius:var(--r); padding:0.9rem 1rem; transition:border-color 0.15s; }
-.resource-card:hover { border-color:var(--gray-200); }
-.card-top { display:flex; align-items:flex-start; gap:0.7rem; }
-.card-badge { flex-shrink:0; margin-top:2px; width:26px; height:26px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:12px; }
-.badge-pdf   { background:var(--forest-light); color:var(--forest); }
-.badge-video { background:var(--cobalt-light);  color:var(--cobalt); }
-.card-title-area { flex:1; min-width:0; }
-.card-title { font-size:0.97rem; font-weight:600; color:var(--gray-900); line-height:1.3; margin-bottom:0.3rem; }
-.card-tags  { display:flex; flex-wrap:wrap; gap:0.25rem; }
-.card-tag   { font-size:0.68rem; font-weight:500; padding:0.12rem 0.45rem; border-radius:50px; background:var(--sky-light); color:#0a7a80; }
-.card-actions { display:flex; align-items:center; gap:0.45rem; margin-top:0.55rem; }
-.card-link { font-size:0.8rem; font-weight:500; padding:0.3rem 0.75rem; border-radius:var(--rs); text-decoration:none; border:none; cursor:pointer; font-family:'Metropolis',sans-serif; }
-.card-link.pdf-l   { background:var(--forest); color:var(--white); }
-.card-link.pdf-l:hover { background:var(--forest-dark); }
-.card-link.vid-l   { background:var(--cobalt); color:var(--white); }
-.card-link.vid-l:hover { background:#1e3ea0; }
-.desc-btn { font-size:0.78rem; font-weight:400; padding:0.28rem 0.65rem; border-radius:var(--rs); border:1px solid var(--gray-200); background:none; color:var(--gray-400); cursor:pointer; font-family:'Metropolis',sans-serif; }
-.desc-btn:hover { border-color:var(--gray-400); color:var(--gray-700); }
-.card-desc { display:none; margin-top:0.55rem; padding:0.55rem 0.75rem; background:var(--gray-50); border-left:3px solid var(--forest); border-radius:0 var(--rs) var(--rs) 0; font-size:0.84rem; color:var(--gray-700); line-height:1.6; }
-.card-desc.open { display:block; }
-.empty-state { text-align:center; padding:2.5rem 1rem; color:var(--gray-400); }
-.empty-state strong { display:block; font-size:1rem; font-weight:600; margin-bottom:0.3rem; color:var(--gray-700); }
+  /* ── LOGIN ── */
+  .login-box { max-width: 360px; margin: 0 auto; text-align: center; }
+  .login-box p { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+  .login-box input {
+    width: 100%; padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'Metropolis', sans-serif;
+    margin-bottom: 12px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .login-box input:focus { border-color: var(--green); }
+  .login-err { color: #dc2626; font-size: 13px; margin-bottom: 8px; min-height: 18px; }
+  .btn-primary {
+    background: var(--green); color: #fff;
+    border: none; padding: 11px 24px;
+    border-radius: 8px; font-size: 14px;
+    font-weight: 600; cursor: pointer;
+    font-family: 'Metropolis', sans-serif;
+    width: 100%;
+    transition: background .2s;
+  }
+  .btn-primary:hover { background: #004d3c; }
 
-/* ADMIN TRIGGER */
-.admin-footer { padding:0.4rem 1.5rem 0.75rem; text-align:right; }
-.admin-trigger-btn { font-size:0.7rem; font-weight:500; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray-200); background:none; border:none; cursor:pointer; font-family:'Metropolis',sans-serif; }
-.admin-trigger-btn:hover { color:var(--gray-400); }
+  /* ── ADMIN PANEL ── */
+  .admin-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+  .admin-tab {
+    padding: 10px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    color: var(--muted);
+    font-family: 'Metropolis', sans-serif;
+    background: none; border-top: none; border-left: none; border-right: none;
+    transition: color .15s;
+  }
+  .admin-tab.active { color: var(--green); border-bottom-color: var(--green); font-weight: 600; }
 
-/* ADMIN PANEL */
-.admin-panel { display:none; border-top:2px solid var(--forest); background:var(--gray-50); padding:1.25rem 1.5rem 2rem; }
-.admin-panel.open { display:block; }
-.admin-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; }
-.admin-bar h2 { font-size:1.1rem; font-weight:700; color:var(--forest); }
-.admin-logout { font-size:0.78rem; font-weight:500; padding:0.3rem 0.7rem; border-radius:var(--rs); border:1px solid var(--gray-200); background:var(--white); color:var(--gray-700); cursor:pointer; font-family:'Metropolis',sans-serif; }
+  .admin-section h3 { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: var(--text); }
+  .form-row { margin-bottom: 12px; }
+  .form-row label { display: block; font-size: 12.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 5px; }
+  .form-row input[type="text"],
+  .form-row input[type="url"],
+  .form-row textarea,
+  .form-row select {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'Metropolis', sans-serif;
+    outline: none;
+    transition: border-color .2s;
+    background: #fff;
+  }
+  .form-row input:focus, .form-row textarea:focus, .form-row select:focus { border-color: var(--green); }
+  .form-row textarea { resize: vertical; min-height: 70px; }
 
-/* LOGIN BOX */
-.login-box { max-width:320px; margin:0 auto; background:var(--white); border:1px solid var(--gray-200); border-radius:var(--r); padding:1.5rem; }
-.login-box h3 { font-size:1rem; font-weight:700; color:var(--forest); margin-bottom:1rem; }
+  /* Admin topic multi-select dropdown */
+  .admin-topic-dd-wrap { position: relative; }
+  .admin-topic-dd-btn {
+    width: 100%; padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: 'Metropolis', sans-serif;
+    cursor: pointer;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    transition: border-color .2s;
+    user-select: none;
+  }
+  .admin-topic-dd-btn:hover, .admin-topic-dd-btn.open { border-color: var(--green); }
+  .admin-topic-dd-menu {
+    display: none;
+    position: absolute; top: calc(100% + 3px); left: 0; right: 0;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.1);
+    z-index: 200;
+    padding: 6px;
+    max-height: 240px; overflow-y: auto;
+  }
+  .admin-topic-dd-menu.open { display: block; }
 
-/* ADMIN TABS */
-.admin-tabs { display:flex; border-bottom:2px solid var(--gray-200); margin-bottom:1.25rem; }
-.atab { padding:0.45rem 1rem; font-size:0.83rem; font-weight:500; background:none; border:none; color:var(--gray-400); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; font-family:'Metropolis',sans-serif; }
-.atab.on { color:var(--forest); border-bottom-color:var(--forest); }
-.asection { display:none; }
-.asection.on { display:block; }
+  .selected-tags-display {
+    display: flex; flex-wrap: wrap; gap: 5px;
+    min-height: 26px; margin-top: 8px;
+  }
+  .sel-tag {
+    background: var(--tag-bg); color: var(--tag-color);
+    padding: 3px 8px; border-radius: 20px; font-size: 12px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .sel-tag .rm { cursor: pointer; font-size: 14px; line-height: 1; color: var(--blue); }
 
-/* FORMS */
-.aform { display:flex; flex-direction:column; gap:0.7rem; }
-.arow  { display:flex; gap:0.5rem; }
-.arow .afield { flex:1; }
-.afield { display:flex; flex-direction:column; gap:0.25rem; }
-.alabel { font-size:0.73rem; font-weight:600; color:var(--gray-700); text-transform:uppercase; letter-spacing:0.04em; }
-.ainput { padding:0.48rem 0.75rem; border:1px solid var(--gray-200); border-radius:var(--rs); font-family:'Metropolis',sans-serif; font-size:0.88rem; color:var(--gray-900); background:var(--white); outline:none; transition:border-color 0.15s; }
-.ainput:focus { border-color:var(--cobalt); }
-textarea.ainput { resize:vertical; min-height:60px; }
-.tag-picker-grid { display:flex; flex-wrap:wrap; gap:0.3rem; padding:0.5rem 0.6rem; border:1px solid var(--gray-200); border-radius:var(--rs); background:var(--white); min-height:46px; }
-.tpchip { padding:0.2rem 0.6rem; border-radius:50px; font-size:0.73rem; font-weight:500; cursor:pointer; background:var(--gray-100); color:var(--gray-700); border:1.5px solid transparent; user-select:none; transition:all 0.12s; }
-.tpchip.on { background:var(--cobalt-light); border-color:var(--cobalt); color:var(--cobalt); }
-.abtn-row { display:flex; gap:0.4rem; justify-content:flex-end; margin-top:0.25rem; }
-.btn-p { padding:0.5rem 1.1rem; background:var(--forest); color:var(--white); border:none; border-radius:var(--rs); font-family:'Metropolis',sans-serif; font-size:0.85rem; font-weight:600; cursor:pointer; }
-.btn-p:hover { background:var(--forest-dark); }
-.btn-s { padding:0.5rem 1.1rem; background:var(--white); color:var(--gray-700); border:1px solid var(--gray-200); border-radius:var(--rs); font-family:'Metropolis',sans-serif; font-size:0.85rem; font-weight:500; cursor:pointer; }
-.btn-s:hover { background:var(--gray-100); }
-.btn-d { padding:0.5rem 1rem; background:#fde8e8; color:#b91c1c; border:none; border-radius:var(--rs); font-family:'Metropolis',sans-serif; font-size:0.83rem; font-weight:500; cursor:pointer; }
-.btn-d:hover { background:#fcc; }
-.toast { display:none; font-size:0.8rem; font-weight:500; padding:0.4rem 0.75rem; border-radius:var(--rs); background:var(--forest-light); color:var(--forest); margin-top:0.4rem; }
-.toast.err { background:#fde8e8; color:#b91c1c; }
+  .form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-actions { display: flex; gap: 10px; margin-top: 16px; }
+  .btn-secondary {
+    background: #fff; color: var(--green);
+    border: 1px solid var(--green);
+    padding: 9px 18px; border-radius: 7px;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: 'Metropolis', sans-serif;
+    transition: background .15s;
+  }
+  .btn-secondary:hover { background: #f0faf8; }
+  .btn-danger {
+    background: #fff; color: #dc2626;
+    border: 1px solid #fca5a5;
+    padding: 9px 18px; border-radius: 7px;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: 'Metropolis', sans-serif;
+    transition: background .15s;
+  }
+  .btn-danger:hover { background: #fef2f2; }
+  .msg { font-size: 13px; padding: 8px 12px; border-radius: 6px; margin-top: 8px; }
+  .msg.success { background: #ecfdf5; color: #065f46; }
+  .msg.error   { background: #fef2f2; color: #dc2626; }
 
-/* MANAGE LIST */
-.manage-list { display:flex; flex-direction:column; gap:0.4rem; margin-top:0.5rem; }
-.mrow { display:flex; align-items:center; gap:0.5rem; padding:0.55rem 0.75rem; background:var(--white); border:1px solid var(--gray-100); border-radius:var(--rs); font-size:0.82rem; }
-.mrow-title { flex:1; font-weight:500; color:var(--gray-900); }
-.mtype { font-size:0.7rem; font-weight:600; padding:0.12rem 0.45rem; border-radius:50px; }
-.mtype.pdf   { background:var(--forest-light); color:var(--forest); }
-.mtype.video { background:var(--cobalt-light);  color:var(--cobalt); }
-.medit-btn { font-size:0.78rem; font-weight:500; padding:0.25rem 0.6rem; border-radius:var(--rs); border:1px solid var(--cobalt); color:var(--cobalt); background:none; cursor:pointer; font-family:'Metropolis',sans-serif; }
-.medit-btn:hover { background:var(--cobalt-light); }
-.edit-box { display:none; margin-top:0.35rem; padding:1rem; border:2px solid var(--cobalt); border-radius:var(--r); background:var(--white); }
-.edit-box.open { display:block; }
-.edit-box-title { font-size:0.78rem; font-weight:700; color:var(--cobalt); margin-bottom:0.75rem; text-transform:uppercase; letter-spacing:0.04em; }
+  /* Resource list in admin */
+  .resource-list { display: flex; flex-direction: column; gap: 10px; max-height: 480px; overflow-y: auto; }
+  .resource-item {
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 16px; background: #fafafa;
+  }
+  .resource-item-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .resource-item-title { font-size: 14px; font-weight: 600; }
+  .resource-item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .ico-btn {
+    padding: 5px 10px; border-radius: 5px; border: 1px solid var(--border);
+    background: #fff; font-size: 12px; cursor: pointer;
+    font-family: 'Metropolis', sans-serif; transition: background .15s;
+  }
+  .ico-btn.edit-btn { color: var(--blue); border-color: #bfdbfe; }
+  .ico-btn.edit-btn:hover { background: #eff6ff; }
+  .ico-btn.del-btn { color: #dc2626; border-color: #fca5a5; }
+  .ico-btn.del-btn:hover { background: #fef2f2; }
+  .resource-item-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
-/* TAG MANAGER */
-.add-tag-row { display:flex; gap:0.5rem; margin-bottom:0.75rem; }
-.add-tag-row .ainput { flex:1; }
-.tags-grid { display:flex; flex-wrap:wrap; gap:0.35rem; }
-.tagitem { display:flex; align-items:center; gap:0.3rem; background:var(--sky-light); border:1px solid #b3eef2; border-radius:50px; padding:0.2rem 0.35rem 0.2rem 0.65rem; font-size:0.76rem; font-weight:500; color:#0a7a80; }
-.tagdel { background:rgba(0,0,0,0.1); border:none; border-radius:50%; width:16px; height:16px; font-size:9px; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#0a7a80; font-family:'Metropolis',sans-serif; }
+  /* Tags panel */
+  .tags-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .tag-item {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--tag-bg); color: var(--tag-color);
+    padding: 5px 10px; border-radius: 20px; font-size: 13px;
+  }
+  .tag-del { cursor: pointer; color: var(--muted); font-size: 16px; line-height: 1; transition: color .15s; }
+  .tag-del:hover { color: #dc2626; }
+  .add-tag-row { display: flex; gap: 8px; }
+  .add-tag-row input {
+    flex: 1; padding: 9px 12px;
+    border: 1px solid var(--border); border-radius: 7px;
+    font-size: 14px; font-family: 'Metropolis', sans-serif; outline: none;
+  }
+  .add-tag-row input:focus { border-color: var(--green); }
+
+  .admin-btn { display: none; }
+  /* Change password */
+  .change-pw { max-width: 340px; }
+
+  /* Edit modal inside admin */
+  .edit-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.5); z-index: 2000;
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .edit-overlay.open { display: flex; }
+  .edit-modal {
+    background: #fff; border-radius: 12px;
+    width: 100%; max-width: 600px; max-height: 92vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  }
+  .edit-modal .modal-head { border-radius: 12px 12px 0 0; }
+  .edit-modal .modal-body { padding: 22px; }
 </style>
 </head>
 <body>
 
-<!-- PUBLIC LIBRARY -->
-<div class="lib-header">
-  <h1>Resource Library</h1>
-  <p>Fact sheets and webinars on gun violence prevention</p>
-</div>
-
-<div class="lib-controls">
-  <div class="search-row">
-    <input class="search-box" id="search" type="text" placeholder="Search resources…" oninput="render()">
-    <div class="type-toggle">
-      <button class="type-btn active" onclick="setType('all',this)">All</button>
-      <button class="type-btn" onclick="setType('pdf',this)">Fact Sheets</button>
-      <button class="type-btn" onclick="setType('video',this)">Webinars</button>
-    </div>
-  </div>
+<!-- HEADER -->
+<div class="header">
   <div>
-    <select class="tag-select" id="tag-select" onchange="selectTag(this.value)">
-      <option value="">Filter by topic…</option>
-    </select>
-    <div class="active-tags-row" id="active-chips"></div>
+    <h1>Resource Library</h1>
+    <p>Fact sheets &amp; webinars on gun violence prevention</p>
   </div>
 </div>
 
-<div class="lib-body">
-  <div class="results-count" id="count"></div>
-  <div class="resource-list" id="res-list"></div>
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <input type="text" id="search-input" placeholder="Search resources…" oninput="renderPublic()">
+  <div class="type-filter">
+    <button class="type-btn active" data-type="all" onclick="setType('all',this)">All</button>
+    <button class="type-btn" data-type="factsheet" onclick="setType('factsheet',this)">Fact Sheets</button>
+    <button class="type-btn" data-type="webinar" onclick="setType('webinar',this)">Webinars</button>
+  </div>
+  <div class="topic-dropdown-wrap" id="pub-dd-wrap">
+    <div class="topic-dropdown-btn" id="pub-dd-btn" onclick="togglePubDD()">
+      <span id="pub-dd-label">Filter by topic</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="topic-dropdown-menu" id="pub-dd-menu"></div>
+  </div>
 </div>
 
-<div class="admin-footer">
-  <button class="admin-trigger-btn" onclick="showLogin()">Admin</button>
+<!-- GRID -->
+<div class="grid-wrap">
+  <p class="results-count" id="results-count"></p>
+  <div class="grid" id="pub-grid"></div>
 </div>
 
-<!-- ADMIN PANEL (inline, no modals) -->
-<div class="admin-panel" id="admin-panel">
-  <div class="admin-bar">
-    <h2>Admin Panel</h2>
-    <button class="admin-logout" onclick="logout()">Sign Out</button>
-  </div>
-
-  <!-- Login -->
-  <div id="login-section">
-    <div class="login-box">
-      <h3>Enter Admin Password</h3>
-      <div class="afield" style="margin-bottom:0.65rem">
-        <label class="alabel">Password</label>
-        <input class="ainput" type="password" id="pw-input" placeholder="Password…" onkeydown="if(event.key==='Enter')doLogin()">
-      </div>
-      <div class="toast err" id="login-err">Incorrect password.</div>
-      <div style="margin-top:0.65rem">
-        <button class="btn-p" style="width:100%" onclick="doLogin()">Sign In</button>
-      </div>
+<!-- ADMIN MODAL -->
+<div class="modal-overlay" id="admin-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modal-title">Admin Panel</h2>
+      <button class="modal-close" onclick="closeAdmin()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <!-- login or panel renders here -->
     </div>
   </div>
+</div>
 
-  <!-- Admin content -->
-  <div id="admin-content" style="display:none">
-    <div class="admin-tabs">
-      <button class="atab on" onclick="atab('add',this)">Add Resource</button>
-      <button class="atab" onclick="atab('manage',this)">Manage Resources</button>
-      <button class="atab" onclick="atab('tags',this)">Manage Tags</button>
+<!-- EDIT RESOURCE MODAL -->
+<div class="edit-overlay" id="edit-overlay">
+  <div class="edit-modal">
+    <div class="modal-head">
+      <h2>Edit Resource</h2>
+      <button class="modal-close" onclick="closeEdit()">✕</button>
     </div>
-
-    <!-- ADD -->
-    <div class="asection on" id="sec-add">
-      <div class="aform">
-        <div class="afield">
-          <label class="alabel">Title *</label>
-          <input class="ainput" id="a-title" type="text" placeholder="Resource title">
-        </div>
-        <div class="arow">
-          <div class="afield">
-            <label class="alabel">Type *</label>
-            <select class="ainput" id="a-type">
-              <option value="pdf">Fact Sheet (PDF)</option>
-              <option value="video">Webinar (YouTube)</option>
-            </select>
-          </div>
-          <div class="afield">
-            <label class="alabel">URL *</label>
-            <input class="ainput" id="a-url" type="text" placeholder="https://…">
-          </div>
-        </div>
-        <div class="afield">
-          <label class="alabel">Description</label>
-          <textarea class="ainput" id="a-desc" placeholder="Brief description (optional)"></textarea>
-        </div>
-        <div class="afield">
-          <label class="alabel">Topic Tags</label>
-          <div class="tag-picker-grid" id="a-tags"></div>
-        </div>
-        <div class="abtn-row">
-          <button class="btn-s" onclick="clearAdd()">Clear</button>
-          <button class="btn-p" onclick="addResource()">Add Resource</button>
-        </div>
-        <div class="toast" id="add-toast">Resource added!</div>
-      </div>
-    </div>
-
-    <!-- MANAGE -->
-    <div class="asection" id="sec-manage">
-      <p style="font-size:0.8rem;color:var(--gray-400);margin-bottom:0.65rem">Click Edit on any resource to update or delete it.</p>
-      <div class="manage-list" id="manage-list"></div>
-    </div>
-
-    <!-- TAGS -->
-    <div class="asection" id="sec-tags">
-      <div class="add-tag-row">
-        <input class="ainput" id="new-tag" type="text" placeholder="New tag name…" onkeydown="if(event.key==='Enter')addTag()">
-        <button class="btn-p" onclick="addTag()">Add Tag</button>
-      </div>
-      <div class="alabel" style="margin-bottom:0.4rem">Current Tags</div>
-      <div class="tags-grid" id="tags-grid"></div>
-      <div class="toast" id="tag-toast" style="margin-top:0.5rem">Tag saved!</div>
-    </div>
+    <div class="modal-body" id="edit-body"></div>
   </div>
 </div>
 
 <script>
-const PW = 'gvpc2024'; // ← change this to your password
+// ── STATE ──
+const ADMIN_PW_KEY = 'rl_admin_pw';
+let adminPw = localStorage.getItem(ADMIN_PW_KEY) || 'coalition2024';
 
-let tags = [
+let topics = [
   'domestic violence','community violence','mass shootings',
-  'Emergency Response Orders','police shootings','immigration',
-  'suicide','firearm industry','youth','survivors','schools',
-  'policy','healthcare'
+  'Emergency Response Orders','Police Shootings','Immigration',
+  'suicide','firearm industry','youth','survivors','schools','policy','healthcare'
 ];
 
 let resources = [
-  {id:1,  title:'Gun Violence in Massachusetts 101', type:'pdf', url:'#', tags:['policy','community violence'], desc:'An overview of gun violence in Massachusetts, covering key statistics, trends, and the policy landscape.'},
-  {id:2,  title:'About the Coalition', type:'pdf', url:'#', tags:['policy'], desc:'Learn about our organization, our mission, and our work to prevent gun violence across Massachusetts.'},
-  {id:3,  title:'Guns and Suicide', type:'pdf', url:'#', tags:['suicide'], desc:'Explores the connection between firearm access and suicide risk, with data and prevention strategies.'},
-  {id:4,  title:'Guns and Domestic Violence', type:'pdf', url:'#', tags:['domestic violence'], desc:'Examines how firearms elevate the danger in domestic violence situations and what laws can help.'},
-  {id:5,  title:'Guns and Mass Shootings', type:'pdf', url:'#', tags:['mass shootings','policy'], desc:'Reviews the data on mass shootings in the US, common factors, and evidence-based policy responses.'},
-  {id:6,  title:'Guns and Police Shootings', type:'pdf', url:'#', tags:['police shootings'], desc:'Analyzes police use-of-force incidents involving firearms and the systemic factors involved.'},
-  {id:7,  title:'Guns and Community Violence', type:'pdf', url:'#', tags:['community violence'], desc:'Focuses on everyday gun violence in communities and intervention strategies that work.'},
-  {id:8,  title:'Guns and Emergency Response Orders', type:'pdf', url:'#', tags:['Emergency Response Orders','policy'], desc:'An explanation of Extreme Risk Protection Orders (ERPOs) and how they are used in Massachusetts.'},
-  {id:9,  title:'The Intersection of Gun Violence, Immigration and Federal Agencies', type:'pdf', url:'#', tags:['immigration','policy'], desc:'Explores the relationship between immigration enforcement, federal agencies, and gun violence.'},
-  {id:10, title:'The Impact of Guns on Healthcare in Massachusetts', type:'pdf', url:'#', tags:['healthcare'], desc:'Documents the toll gun violence takes on the healthcare system and providers in Massachusetts.'},
-  {id:11, title:'The Impact of Guns on Schools in Massachusetts', type:'pdf', url:'#', tags:['schools','youth'], desc:'Examines how gun violence affects educational environments and students across the state.'},
-  {id:12, title:'The Impact of Guns on Businesses in Massachusetts', type:'pdf', url:'#', tags:['policy','community violence'], desc:'Looks at the economic cost of gun violence on businesses and local economies.'},
-  {id:13, title:'Why Young People Carry Guns', type:'video', url:'#', tags:['youth','community violence'], desc:'A conversation examining the social and environmental factors that lead young people to carry firearms.'},
-  {id:14, title:'The Intersection of Guns and Domestic Violence', type:'video', url:'#', tags:['domestic violence'], desc:'Experts discuss how firearms increase lethality in domestic violence and what policies can help.'},
-  {id:15, title:'The Former White House Office of Gun Violence Prevention', type:'video', url:'#', tags:['policy'], desc:'An inside look at the work and priorities of the White House Office of Gun Violence Prevention.'},
-  {id:16, title:'Firearm Industry Accountability', type:'video', url:'#', tags:['firearm industry','policy'], desc:'A webinar on holding the gun industry legally and financially accountable for harm caused by its products.'},
-  {id:17, title:'How Guns Fuel Violence Abroad and Drive Migration', type:'video', url:'#', tags:['immigration','community violence'], desc:'Explores the global arms pipeline and how US-sourced guns contribute to violence and forced migration.'},
-  {id:18, title:'The Intersection of Domestic Violence and Community Violence', type:'video', url:'#', tags:['domestic violence','community violence'], desc:'Examines the overlap between intimate partner violence and broader community violence patterns.'},
-  {id:19, title:'Firearms and Family Violence', type:'video', url:'#', tags:['domestic violence'], desc:'Discusses how firearm access within families increases risks of lethal domestic and family violence.'},
-  {id:20, title:'The Community Violence Intervention Action Plan', type:'video', url:'#', tags:['community violence','policy'], desc:'Presents a comprehensive action plan for community-based violence intervention and prevention.'},
-  {id:21, title:'Focusing on Survivors: A Conversation with the Louis D Brown Peace Institute', type:'video', url:'#', tags:['survivors','community violence'], desc:'Centering the voices of survivors, this webinar highlights the work of the Louis D Brown Peace Institute.'},
-  {id:22, title:'Bridging Healthcare and Safety: An Extreme Risk Protection Order Overview', type:'video', url:'#', tags:['healthcare','Emergency Response Orders'], desc:'Healthcare providers and legal experts discuss the role of ERPOs in preventing gun violence.'},
-  {id:23, title:'Focusing on Educators: A Conversation with Teachers Unify', type:'video', url:'#', tags:['schools','youth'], desc:"Teachers discuss gun violence's impact on education and their advocacy efforts with Teachers Unify."},
-  {id:24, title:'Effects of a Hospital Based Violence Intervention Program on Community Violence', type:'video', url:'#', tags:['healthcare','community violence','survivors'], desc:'Research on how hospital-based intervention programs reduce community violence and recidivism.'},
-  {id:25, title:'ICE and Gun Violence in Massachusetts', type:'video', url:'#', tags:['immigration','police shootings'], desc:'Explores the intersection of federal immigration enforcement and gun violence in Massachusetts.'},
-  {id:26, title:'The Raise the Age Bill – A Conversation with Citizens for Juvenile Justice', type:'video', url:'#', tags:['youth','policy'], desc:'A discussion on raising the age of juvenile justice jurisdiction and its connection to youth gun violence.'},
+  {id:1,type:'factsheet',title:'Gun Violence in Massachusetts 101',topics:['policy'],desc:'An overview of gun violence statistics and context in Massachusetts.',url:'#'},
+  {id:2,type:'factsheet',title:'About the Coalition',topics:['policy'],desc:'Learn about our coalition, mission, and the work we do to prevent gun violence.',url:'#'},
+  {id:3,type:'factsheet',title:'Guns and Suicide',topics:['suicide'],desc:'Explores the connection between firearm access and suicide risk, with prevention strategies.',url:'#'},
+  {id:4,type:'factsheet',title:'Guns and Domestic Violence',topics:['domestic violence'],desc:'Data and policy context on how firearms escalate danger in domestic violence situations.',url:'#'},
+  {id:5,type:'factsheet',title:'Guns and Mass Shootings',topics:['mass shootings','policy'],desc:'Key facts on mass shooting incidents and related legislative responses.',url:'#'},
+  {id:6,type:'factsheet',title:'Guns and Police Shootings',topics:['Police Shootings'],desc:'An examination of data and policy context around police-involved shootings.',url:'#'},
+  {id:7,type:'factsheet',title:'Guns and Community Violence',topics:['community violence'],desc:'Community violence trends, impacts, and intervention strategies.',url:'#'},
+  {id:8,type:'factsheet',title:'Guns and Emergency Response Orders',topics:['Emergency Response Orders'],desc:'A guide to Extreme Risk Protection Orders and how they work in Massachusetts.',url:'#'},
+  {id:9,type:'factsheet',title:'The Intersection of Gun Violence, Immigration and Federal Agencies',topics:['Immigration','policy'],desc:'How immigration enforcement intersects with gun violence and public safety.',url:'#'},
+  {id:10,type:'factsheet',title:'The Impact of Guns on Healthcare in Massachusetts',topics:['healthcare'],desc:'The burden of gun violence on the healthcare system in Massachusetts.',url:'#'},
+  {id:11,type:'factsheet',title:'The Impact of Guns on Schools in Massachusetts',topics:['schools','youth'],desc:'How gun violence affects students, educators, and schools across Massachusetts.',url:'#'},
+  {id:12,type:'factsheet',title:'The Impact of Guns on Businesses in Massachusetts',topics:['policy'],desc:'Economic and safety impacts of gun violence on businesses in the state.',url:'#'},
+  {id:13,type:'webinar',title:'Why Young People Carry Guns',topics:['youth','community violence'],desc:'A deep dive into the social and economic factors that lead young people to carry firearms.',url:'#'},
+  {id:14,type:'webinar',title:'The Intersection of Guns and Domestic Violence',topics:['domestic violence'],desc:'Expert conversation on how firearms increase lethality in domestic violence situations.',url:'#'},
+  {id:15,type:'webinar',title:'The Former White House Office of Gun Violence Prevention',topics:['policy'],desc:'An inside look at federal efforts to address gun violence under the Biden administration.',url:'#'},
+  {id:16,type:'webinar',title:'Firearm Industry Accountability',topics:['firearm industry','policy'],desc:'How to hold the firearm industry legally accountable for gun violence.',url:'#'},
+  {id:17,type:'webinar',title:'How Guns Fuel Violence Abroad and Drive Migration',topics:['Immigration','firearm industry'],desc:'The link between U.S. gun exports, violence in other countries, and migration patterns.',url:'#'},
+  {id:18,type:'webinar',title:'The Intersection of Domestic Violence and Community Violence',topics:['domestic violence','community violence'],desc:'Exploring the overlap between interpersonal and community gun violence.',url:'#'},
+  {id:19,type:'webinar',title:'Firearms and Family Violence',topics:['domestic violence'],desc:'Research and conversation on how firearms are used in family violence situations.',url:'#'},
+  {id:20,type:'webinar',title:'The Community Violence Intervention Action Plan',topics:['community violence','policy'],desc:'Strategies and policy solutions for community-based violence intervention.',url:'#'},
+  {id:21,type:'webinar',title:'Focusing on Survivors: A Conversation with the Louis D Brown Peace Institute',topics:['survivors','community violence'],desc:'Centering the experiences and needs of gun violence survivors in prevention work.',url:'#'},
+  {id:22,type:'webinar',title:'Bridging Healthcare and Safety: An Extreme Risk Protection Order Overview',topics:['healthcare','Emergency Response Orders'],desc:'How healthcare providers can engage with extreme risk protection orders.',url:'#'},
+  {id:23,type:'webinar',title:'Focusing on Educators: A Conversation with Teachers Unify',topics:['schools','youth'],desc:'How educators are responding to gun violence and advocating for safe schools.',url:'#'},
+  {id:24,type:'webinar',title:'Effects of a Hospital Based Violence Intervention Program on Community Violence',topics:['healthcare','community violence'],desc:'Research on how hospital-based programs reduce community violence recidivism.',url:'#'},
+  {id:25,type:'webinar',title:'ICE and Gun Violence in Massachusetts',topics:['Immigration','Police Shootings'],desc:'The intersection of immigration enforcement, ICE, and gun violence in MA.',url:'#'},
 ];
 
-let nextId = 27, activeType = 'all', activeTags = [], loggedIn = false;
+let nextId = 26;
+let currentType = 'all';
+let selectedPubTopics = [];
+let adminLoggedIn = false;
+let adminTab = 'resources';
+let editingId = null;
+let editSelectedTopics = [];
+let addSelectedTopics = [];
 
-// ── PUBLIC ──
-function renderPubTags() {
-  // rebuild select options
-  const sel = document.getElementById('tag-select');
-  if (sel) {
-    sel.innerHTML = '<option value="">Filter by topic…</option>' +
-      tags.map(t => `<option value="${t}">${activeTags.includes(t) ? '\u2713 ' : ''}${t}</option>`).join('');
-    sel.value = '';
-    sel.classList.toggle('has-active', activeTags.length > 0);
+// ── PUBLIC DROPDOWN ──
+function buildPubDD() {
+  const menu = document.getElementById('pub-dd-menu');
+  menu.innerHTML = topics.map(t => `
+    <label class="topic-option${selectedPubTopics.includes(t)?' selected':''}" onclick="togglePubTopic('${t}',event)">
+      <input type="checkbox" ${selectedPubTopics.includes(t)?'checked':''} onclick="event.stopPropagation()"> ${t}
+    </label>
+  `).join('') + `<span class="dd-clear" onclick="clearPubTopics()">Clear all</span>`;
+}
+function togglePubDD() {
+  const btn = document.getElementById('pub-dd-btn');
+  const menu = document.getElementById('pub-dd-menu');
+  btn.classList.toggle('open');
+  menu.classList.toggle('open');
+  if (menu.classList.contains('open')) buildPubDD();
+}
+function togglePubTopic(t, e) {
+  e && e.stopPropagation();
+  if (selectedPubTopics.includes(t)) selectedPubTopics = selectedPubTopics.filter(x=>x!==t);
+  else selectedPubTopics.push(t);
+  buildPubDD();
+  updatePubDDLabel();
+  renderPublic();
+}
+function clearPubTopics() {
+  selectedPubTopics = [];
+  buildPubDD();
+  updatePubDDLabel();
+  renderPublic();
+}
+function updatePubDDLabel() {
+  const lbl = document.getElementById('pub-dd-label');
+  lbl.textContent = selectedPubTopics.length
+    ? selectedPubTopics.length === 1 ? selectedPubTopics[0] : `${selectedPubTopics.length} topics selected`
+    : 'Filter by topic';
+}
+document.addEventListener('click', e => {
+  const wrap = document.getElementById('pub-dd-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('pub-dd-btn').classList.remove('open');
+    document.getElementById('pub-dd-menu').classList.remove('open');
   }
-  // active chips
-  const chips = document.getElementById('active-chips');
-  if (chips) {
-    chips.innerHTML = activeTags.map(t =>
-      `<span class="active-chip">${t}<button class="active-chip-x" onclick="removeTag2(${JSON.stringify(t)})">&#10005;</button></span>`
-    ).join('');
-  }
+});
+
+function setType(t, el) {
+  currentType = t;
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderPublic();
 }
-function selectTag(val) {
-  if (!val) return;
-  if (!activeTags.includes(val)) activeTags.push(val);
-  renderPubTags(); render();
-}
-function removeTag2(t) {
-  activeTags = activeTags.filter(x => x !== t);
-  renderPubTags(); render();
-}
-function toggleTag(t) {
-  activeTags = activeTags.includes(t) ? activeTags.filter(x=>x!==t) : [...activeTags,t];
-  renderPubTags(); render();
-}
-function setType(type, btn) {
-  activeType = type;
-  document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active'); render();
-}
-function render() {
-  const q = document.getElementById('search').value.toLowerCase().trim();
-  const filtered = resources.filter(r => {
-    const tOk = activeType==='all' || r.type===activeType;
-    const gOk = activeTags.length===0 || activeTags.every(t=>r.tags.includes(t));
-    const sOk = !q || r.title.toLowerCase().includes(q) || (r.desc&&r.desc.toLowerCase().includes(q)) || r.tags.some(t=>t.toLowerCase().includes(q));
-    return tOk && gOk && sOk;
+
+// ── RENDER PUBLIC ──
+function renderPublic() {
+  const q = document.getElementById('search-input').value.toLowerCase().trim();
+  let filtered = resources.filter(r => {
+    if (currentType !== 'all' && r.type !== currentType) return false;
+    if (selectedPubTopics.length && !selectedPubTopics.some(t => r.topics.includes(t))) return false;
+    if (q && !r.title.toLowerCase().includes(q) && !r.desc.toLowerCase().includes(q) && !r.topics.some(t=>t.toLowerCase().includes(q))) return false;
+    return true;
   });
-  document.getElementById('count').textContent = filtered.length===resources.length
-    ? `${resources.length} resources` : `${filtered.length} of ${resources.length} resources`;
-  const el = document.getElementById('res-list');
-  if (!filtered.length) { el.innerHTML='<div class="empty-state"><strong>No resources found</strong>Try adjusting your filters or search.</div>'; return; }
-  el.innerHTML = filtered.map(r => {
-    const v = r.type==='video', hasDesc = r.desc&&r.desc.trim();
-    return `<div class="resource-card">
-      <div class="card-top">
-        <div class="card-badge ${v?'badge-video':'badge-pdf'}">${v?'&#9654;':'&#8595;'}</div>
-        <div class="card-title-area">
-          <div class="card-title">${r.title}</div>
-          <div class="card-tags">${r.tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
-        </div>
+  const grid = document.getElementById('pub-grid');
+  const count = document.getElementById('results-count');
+  count.textContent = `${filtered.length} resource${filtered.length!==1?'s':''} found`;
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="empty-state"><h3>No resources found</h3><p>Try adjusting your search or filters.</p></div>`;
+    return;
+  }
+  grid.innerHTML = filtered.map(r => {
+    const isVid = r.type === 'webinar';
+    const tagsHtml = r.topics.map(t=>`<span class="tag" onclick="filterByTag('${t}')">${t}</span>`).join('');
+    const hasDesc = r.desc && r.desc.trim();
+    const descHtml = hasDesc ? `
+      <div class="card-desc-wrap">
+        <div class="card-desc-text" id="desc-${r.id}">${r.desc}</div>
+        <button class="expand-btn" id="exp-${r.id}" onclick="toggleDesc(${r.id})">Show more</button>
+      </div>` : '';
+    const linkClass = r.url && r.url !== '#' ? (isVid ? 'vid-l' : 'pdf-l') : 'no-link';
+    const linkText = isVid ? '▶ Watch Webinar' : '↓ View PDF';
+    const linkHtml = r.url && r.url !== '#'
+      ? `<a class="card-link ${linkClass}" href="${r.url}" target="_top">${linkText}</a>`
+      : `<span class="card-link no-link">${linkText}</span>`;
+    return `<div class="card">
+      <div class="card-header">
+        <div class="card-title">${r.title}</div>
+        <span class="card-type type-${r.type}">${r.type === 'webinar' ? 'Webinar' : 'Fact Sheet'}</span>
       </div>
-      <div class="card-actions">
-        <a class="card-link ${v?'vid-l':'pdf-l'}" href="${r.url === '#' ? '#' : r.url}" target="_blank" rel="noopener noreferrer">${v?'Watch Webinar':'View PDF'}</a>
-        ${hasDesc?`<button class="desc-btn" onclick="toggleDesc(${r.id},this)">About &#9660;</button>`:''}
-      </div>
-      ${hasDesc?`<div class="card-desc" id="desc-${r.id}">${r.desc}</div>`:''}
+      ${r.topics.length ? `<div class="card-tags">${tagsHtml}</div>` : ''}
+      ${descHtml}
+      ${linkHtml}
     </div>`;
   }).join('');
 }
-function toggleDesc(id, btn) {
-  const el = document.getElementById('desc-'+id);
-  if (!el) return;
-  const open = el.classList.toggle('open');
-  btn.innerHTML = open ? 'About &#9650;' : 'About &#9660;';
+
+function filterByTag(t) {
+  if (!selectedPubTopics.includes(t)) { selectedPubTopics.push(t); updatePubDDLabel(); buildPubDD(); renderPublic(); }
 }
 
-// ── LOGIN ──
-function showLogin() {
-  const p = document.getElementById('admin-panel');
-  p.classList.toggle('open');
-  if (p.classList.contains('open') && !loggedIn) {
-    p.scrollIntoView({behavior:'smooth'});
-    setTimeout(()=>document.getElementById('pw-input').focus(),100);
-  }
-}
-function doLogin() {
-  const val = document.getElementById('pw-input').value;
-  const err = document.getElementById('login-err');
-  if (val===PW) {
-    loggedIn=true;
-    document.getElementById('login-section').style.display='none';
-    document.getElementById('admin-content').style.display='block';
-    renderAdminAll();
-  } else {
-    err.style.display='block';
-    document.getElementById('pw-input').value='';
-    setTimeout(()=>err.style.display='none',2500);
-  }
-}
-function logout() {
-  loggedIn=false;
-  document.getElementById('pw-input').value='';
-  document.getElementById('admin-content').style.display='none';
-  document.getElementById('login-section').style.display='block';
-  document.getElementById('admin-panel').classList.remove('open');
+function toggleDesc(id) {
+  const el = document.getElementById('desc-'+id);
+  const btn = document.getElementById('exp-'+id);
+  if (!el) return;
+  el.classList.toggle('expanded');
+  btn.textContent = el.classList.contains('expanded') ? 'Show less' : 'Show more';
 }
 
 // ── ADMIN ──
-function atab(name, btn) {
-  document.querySelectorAll('.asection').forEach(s=>s.classList.remove('on'));
-  document.querySelectorAll('.atab').forEach(b=>b.classList.remove('on'));
-  document.getElementById('sec-'+name).classList.add('on');
-  btn.classList.add('on');
+function openAdmin() {
+  document.getElementById('admin-modal').classList.add('open');
+  adminLoggedIn ? renderAdminPanel() : renderLogin();
 }
-function renderAdminAll() { renderAddPicker(); renderManageList(); renderTagsGrid(); }
-
-// Tag pickers
-function buildPicker(cid, selected) {
-  const el = document.getElementById(cid);
-  if (!el) return;
-  el.innerHTML = tags.map(t =>
-    `<span class="tpchip${selected.includes(t)?' on':''}" onclick="this.classList.toggle('on')">${t}</span>`
-  ).join('');
-}
-function getPickerTags(cid) {
-  return [...document.querySelectorAll('#'+cid+' .tpchip.on')].map(c=>c.textContent);
-}
-function renderAddPicker() { buildPicker('a-tags',[]); }
-
-// Add resource
-function clearAdd() {
-  ['a-title','a-url','a-desc'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('a-type').value='pdf';
-  renderAddPicker();
-}
-function addResource() {
-  const title=document.getElementById('a-title').value.trim();
-  const url=document.getElementById('a-url').value.trim();
-  if (!title||!url){alert('Please enter a title and URL.');return;}
-  resources.push({id:nextId++,title,type:document.getElementById('a-type').value,url,tags:getPickerTags('a-tags'),desc:document.getElementById('a-desc').value.trim()});
-  clearAdd(); render(); renderManageList();
-  const t=document.getElementById('add-toast');
-  t.style.display='block'; setTimeout(()=>t.style.display='none',2000);
+function closeAdmin() {
+  document.getElementById('admin-modal').classList.remove('open');
 }
 
-// Manage resources
-function renderManageList() {
-  const el=document.getElementById('manage-list');
-  if (!el) return;
-  if (!resources.length){el.innerHTML='<p style="font-size:0.82rem;color:var(--gray-400)">No resources yet.</p>';return;}
-  el.innerHTML=resources.map(r=>`
-    <div>
-      <div class="mrow">
-        <span class="mtype ${r.type}">${r.type==='pdf'?'PDF':'Video'}</span>
-        <span class="mrow-title">${r.title}</span>
-        <span style="font-size:0.72rem;color:var(--gray-400)">${r.tags.slice(0,2).join(', ')}${r.tags.length>2?'…':''}</span>
-        <button class="medit-btn" onclick="openEdit(${r.id})">Edit</button>
+function renderLogin() {
+  document.getElementById('modal-title').textContent = 'Admin Login';
+  document.getElementById('modal-body').innerHTML = `
+    <div class="login-box">
+      <p>Enter the admin password to manage resources and topics.</p>
+      <p class="login-err" id="login-err"></p>
+      <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="btn-primary" onclick="doLogin()">Sign In</button>
+    </div>`;
+  setTimeout(()=>{ const el = document.getElementById('pw-input'); if(el) el.focus(); }, 50);
+}
+
+function doLogin() {
+  const val = document.getElementById('pw-input').value;
+  if (val === adminPw) {
+    adminLoggedIn = true;
+    renderAdminPanel();
+  } else {
+    document.getElementById('login-err').textContent = 'Incorrect password.';
+  }
+}
+
+function renderAdminPanel() {
+  document.getElementById('modal-title').textContent = 'Admin Panel';
+  document.getElementById('modal-body').innerHTML = `
+    <div class="admin-tabs">
+      <button class="admin-tab${adminTab==='resources'?' active':''}" onclick="switchTab('resources')">Resources</button>
+      <button class="admin-tab${adminTab==='add'?' active':''}" onclick="switchTab('add')">Add Resource</button>
+      <button class="admin-tab${adminTab==='tags'?' active':''}" onclick="switchTab('tags')">Manage Tags</button>
+      <button class="admin-tab${adminTab==='settings'?' active':''}" onclick="switchTab('settings')">Settings</button>
+    </div>
+    <div id="admin-content"></div>`;
+  renderAdminTab();
+}
+
+function switchTab(t) {
+  adminTab = t;
+  document.querySelectorAll('.admin-tab').forEach(el => el.classList.toggle('active', el.textContent.toLowerCase().replace(' ','') === t.toLowerCase().replace(' ','')));
+  // re-match by tab name
+  document.querySelectorAll('.admin-tab').forEach(el => {
+    const map = {Resources:'resources','Add Resource':'add','Manage Tags':'tags',Settings:'settings'};
+    el.classList.toggle('active', map[el.textContent] === t);
+  });
+  renderAdminTab();
+}
+
+function renderAdminTab() {
+  const c = document.getElementById('admin-content');
+  if (!c) return;
+  if (adminTab === 'resources') renderAdminResources(c);
+  else if (adminTab === 'add') renderAdminAdd(c);
+  else if (adminTab === 'tags') renderAdminTags(c);
+  else if (adminTab === 'settings') renderAdminSettings(c);
+}
+
+// ── RESOURCES TAB ──
+function renderAdminResources(c) {
+  c.innerHTML = `
+    <div class="admin-section">
+      <h3>All Resources (${resources.length})</h3>
+      <div class="resource-list">${resources.map(r=>`
+        <div class="resource-item">
+          <div class="resource-item-header">
+            <div class="resource-item-title">${r.title}</div>
+            <div class="resource-item-actions">
+              <button class="ico-btn edit-btn" onclick="openEdit(${r.id})">Edit</button>
+              <button class="ico-btn del-btn" onclick="deleteResource(${r.id})">Delete</button>
+            </div>
+          </div>
+          <div class="resource-item-meta">${r.type==='webinar'?'Webinar':'Fact Sheet'} · ${r.topics.join(', ')||'No tags'} · <a href="${r.url}" target="_top" style="color:var(--blue)">${r.url==='#'?'No URL set':'Link →'}</a></div>
+        </div>`).join('')}
       </div>
-      <div class="edit-box" id="edit-${r.id}">
-        <div class="edit-box-title">Editing resource</div>
-        <div class="aform">
-          <div class="afield">
-            <label class="alabel">Title *</label>
-            <input class="ainput" id="et-title-${r.id}" value="${r.title.replace(/"/g,'&quot;')}">
-          </div>
-          <div class="arow">
-            <div class="afield">
-              <label class="alabel">Type</label>
-              <select class="ainput" id="et-type-${r.id}">
-                <option value="pdf" ${r.type==='pdf'?'selected':''}>Fact Sheet (PDF)</option>
-                <option value="video" ${r.type==='video'?'selected':''}>Webinar (YouTube)</option>
-              </select>
-            </div>
-            <div class="afield">
-              <label class="alabel">URL</label>
-              <input class="ainput" id="et-url-${r.id}" value="${r.url.replace(/"/g,'&quot;')}">
-            </div>
-          </div>
-          <div class="afield">
-            <label class="alabel">Description</label>
-            <textarea class="ainput" id="et-desc-${r.id}">${r.desc||''}</textarea>
-          </div>
-          <div class="afield">
-            <label class="alabel">Topic Tags</label>
-            <div class="tag-picker-grid" id="et-tags-${r.id}"></div>
-          </div>
-          <div class="abtn-row">
-            <button class="btn-d" onclick="deleteRes(${r.id})">Delete</button>
-            <button class="btn-s" onclick="closeEdit(${r.id})">Cancel</button>
-            <button class="btn-p" onclick="saveEdit(${r.id})">Save Changes</button>
-          </div>
-          <div class="toast" id="et-toast-${r.id}">Saved!</div>
+    </div>`;
+}
+
+function deleteResource(id) {
+  if (!confirm('Delete this resource?')) return;
+  resources = resources.filter(r=>r.id!==id);
+  renderPublic();
+  renderAdminTab();
+}
+
+// ── ADD RESOURCE TAB ──
+function renderAdminAdd(c) {
+  addSelectedTopics = [];
+  c.innerHTML = `
+    <div class="admin-section">
+      <h3>Add New Resource</h3>
+      <div class="form-row"><label>Title</label><input type="text" id="add-title" placeholder="Resource title"></div>
+      <div class="form-2col">
+        <div class="form-row"><label>Type</label>
+          <select id="add-type">
+            <option value="factsheet">Fact Sheet</option>
+            <option value="webinar">Webinar</option>
+          </select>
         </div>
+        <div class="form-row"><label>URL</label><input type="url" id="add-url" placeholder="https://…"></div>
       </div>
-    </div>`).join('');
+      <div class="form-row"><label>Description</label><textarea id="add-desc" placeholder="Brief description of this resource…"></textarea></div>
+      <div class="form-row">
+        <label>Topics</label>
+        <div class="admin-topic-dd-wrap" id="add-dd-wrap">
+          <div class="admin-topic-dd-btn" id="add-dd-btn" onclick="toggleAddDD()">
+            <span id="add-dd-label">Select topics…</span><span class="arrow">▼</span>
+          </div>
+          <div class="admin-topic-dd-menu" id="add-dd-menu"></div>
+        </div>
+        <div class="selected-tags-display" id="add-tags-display"></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" onclick="doAddResource()" style="width:auto;padding:9px 24px">Add Resource</button>
+      </div>
+      <div id="add-msg"></div>
+    </div>`;
+  buildAddDD();
 }
+
+function buildAddDD() {
+  const menu = document.getElementById('add-dd-menu');
+  if (!menu) return;
+  menu.innerHTML = topics.map(t=>`
+    <label class="topic-option${addSelectedTopics.includes(t)?' selected':''}" onclick="toggleAddTopic('${t}',event)">
+      <input type="checkbox" ${addSelectedTopics.includes(t)?'checked':''} onclick="event.stopPropagation()"> ${t}
+    </label>`).join('') + `<span class="dd-clear" onclick="clearAddTopics()">Clear all</span>`;
+  renderAddTagsDisplay();
+}
+function toggleAddDD() {
+  const btn = document.getElementById('add-dd-btn');
+  const menu = document.getElementById('add-dd-menu');
+  if (!btn||!menu) return;
+  btn.classList.toggle('open'); menu.classList.toggle('open');
+}
+function toggleAddTopic(t, e) {
+  e && e.stopPropagation();
+  if (addSelectedTopics.includes(t)) addSelectedTopics = addSelectedTopics.filter(x=>x!==t);
+  else addSelectedTopics.push(t);
+  buildAddDD();
+}
+function clearAddTopics() { addSelectedTopics = []; buildAddDD(); }
+function renderAddTagsDisplay() {
+  const d = document.getElementById('add-tags-display'); if (!d) return;
+  d.innerHTML = addSelectedTopics.map(t=>`<span class="sel-tag">${t}<span class="rm" onclick="toggleAddTopic('${t}',event)">×</span></span>`).join('');
+  const lbl = document.getElementById('add-dd-label');
+  if (lbl) lbl.textContent = addSelectedTopics.length ? `${addSelectedTopics.length} selected` : 'Select topics…';
+}
+document.addEventListener('click', e => {
+  const wrap = document.getElementById('add-dd-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    const btn = document.getElementById('add-dd-btn'); const menu = document.getElementById('add-dd-menu');
+    if (btn) btn.classList.remove('open'); if (menu) menu.classList.remove('open');
+  }
+});
+
+function doAddResource() {
+  const title = document.getElementById('add-title')?.value.trim();
+  const type  = document.getElementById('add-type')?.value;
+  const url   = document.getElementById('add-url')?.value.trim() || '#';
+  const desc  = document.getElementById('add-desc')?.value.trim();
+  const msgEl = document.getElementById('add-msg');
+  if (!title) { msgEl.innerHTML = `<div class="msg error">Please enter a title.</div>`; return; }
+  resources.push({id: nextId++, type, title, topics: [...addSelectedTopics], url, desc});
+  renderPublic();
+  msgEl.innerHTML = `<div class="msg success">Resource added successfully!</div>`;
+  document.getElementById('add-title').value = '';
+  document.getElementById('add-url').value = '';
+  document.getElementById('add-desc').value = '';
+  addSelectedTopics = [];
+  buildAddDD();
+  setTimeout(()=>{ if(msgEl) msgEl.innerHTML=''; }, 3000);
+}
+
+// ── EDIT RESOURCE ──
 function openEdit(id) {
-  document.querySelectorAll('.edit-box.open').forEach(b=>b.classList.remove('open'));
-  const box=document.getElementById('edit-'+id);
-  box.classList.add('open');
-  buildPicker('et-tags-'+id, resources.find(r=>r.id===id).tags);
-  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+  const r = resources.find(r=>r.id===id);
+  if (!r) return;
+  editingId = id;
+  editSelectedTopics = [...r.topics];
+  const body = document.getElementById('edit-body');
+  body.innerHTML = `
+    <div class="form-row"><label>Title</label><input type="text" id="edit-title" value="${r.title}"></div>
+    <div class="form-2col">
+      <div class="form-row"><label>Type</label>
+        <select id="edit-type">
+          <option value="factsheet"${r.type==='factsheet'?' selected':''}>Fact Sheet</option>
+          <option value="webinar"${r.type==='webinar'?' selected':''}>Webinar</option>
+        </select>
+      </div>
+      <div class="form-row"><label>URL</label><input type="url" id="edit-url" value="${r.url==='#'?'':r.url}" placeholder="https://…"></div>
+    </div>
+    <div class="form-row"><label>Description</label><textarea id="edit-desc">${r.desc||''}</textarea></div>
+    <div class="form-row">
+      <label>Topics</label>
+      <div class="admin-topic-dd-wrap" id="edit-dd-wrap">
+        <div class="admin-topic-dd-btn" id="edit-dd-btn" onclick="toggleEditDD()">
+          <span id="edit-dd-label">${editSelectedTopics.length?editSelectedTopics.length+' selected':'Select topics…'}</span><span class="arrow">▼</span>
+        </div>
+        <div class="admin-topic-dd-menu" id="edit-dd-menu"></div>
+      </div>
+      <div class="selected-tags-display" id="edit-tags-display"></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-primary" onclick="saveEdit()" style="width:auto;padding:9px 24px">Save Changes</button>
+      <button class="btn-secondary" onclick="closeEdit()">Cancel</button>
+    </div>
+    <div id="edit-msg"></div>`;
+  buildEditDD();
+  document.getElementById('edit-overlay').classList.add('open');
 }
-function closeEdit(id){ document.getElementById('edit-'+id).classList.remove('open'); }
-function saveEdit(id) {
-  const r=resources.find(x=>x.id===id); if(!r) return;
-  r.title=document.getElementById('et-title-'+id).value.trim();
-  r.type=document.getElementById('et-type-'+id).value;
-  r.url=document.getElementById('et-url-'+id).value.trim();
-  r.desc=document.getElementById('et-desc-'+id).value.trim();
-  r.tags=getPickerTags('et-tags-'+id);
-  render(); renderManageList();
-  const t=document.getElementById('et-toast-'+id);
-  if(t){t.style.display='block';setTimeout(()=>{t.style.display='none';closeEdit(id);},1200);}
+function closeEdit() { document.getElementById('edit-overlay').classList.remove('open'); editingId=null; }
+
+function buildEditDD() {
+  const menu = document.getElementById('edit-dd-menu'); if (!menu) return;
+  menu.innerHTML = topics.map(t=>`
+    <label class="topic-option${editSelectedTopics.includes(t)?' selected':''}" onclick="toggleEditTopic('${t}',event)">
+      <input type="checkbox" ${editSelectedTopics.includes(t)?'checked':''} onclick="event.stopPropagation()"> ${t}
+    </label>`).join('') + `<span class="dd-clear" onclick="clearEditTopics()">Clear all</span>`;
+  renderEditTagsDisplay();
 }
-function deleteRes(id) {
-  if(!confirm('Delete this resource? This cannot be undone.')) return;
-  resources=resources.filter(r=>r.id!==id);
-  render(); renderManageList();
+function toggleEditDD() {
+  const btn = document.getElementById('edit-dd-btn'); const menu = document.getElementById('edit-dd-menu');
+  if (!btn||!menu) return;
+  btn.classList.toggle('open'); menu.classList.toggle('open');
+}
+function toggleEditTopic(t, e) {
+  e && e.stopPropagation();
+  if (editSelectedTopics.includes(t)) editSelectedTopics = editSelectedTopics.filter(x=>x!==t);
+  else editSelectedTopics.push(t);
+  buildEditDD();
+}
+function clearEditTopics() { editSelectedTopics = []; buildEditDD(); }
+function renderEditTagsDisplay() {
+  const d = document.getElementById('edit-tags-display'); if (!d) return;
+  d.innerHTML = editSelectedTopics.map(t=>`<span class="sel-tag">${t}<span class="rm" onclick="toggleEditTopic('${t}',event)">×</span></span>`).join('');
+  const lbl = document.getElementById('edit-dd-label');
+  if (lbl) lbl.textContent = editSelectedTopics.length ? `${editSelectedTopics.length} selected` : 'Select topics…';
+}
+document.addEventListener('click', e => {
+  const wrap = document.getElementById('edit-dd-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    const btn = document.getElementById('edit-dd-btn'); const menu = document.getElementById('edit-dd-menu');
+    if (btn) btn.classList.remove('open'); if (menu) menu.classList.remove('open');
+  }
+});
+function saveEdit() {
+  const r = resources.find(r=>r.id===editingId); if (!r) return;
+  const title = document.getElementById('edit-title')?.value.trim();
+  if (!title) { document.getElementById('edit-msg').innerHTML=`<div class="msg error">Title is required.</div>`; return; }
+  r.title = title;
+  r.type  = document.getElementById('edit-type').value;
+  r.url   = document.getElementById('edit-url')?.value.trim() || '#';
+  r.desc  = document.getElementById('edit-desc')?.value.trim();
+  r.topics = [...editSelectedTopics];
+  closeEdit();
+  renderPublic();
+  if (adminTab === 'resources') renderAdminTab();
 }
 
-// Manage tags
-function renderTagsGrid() {
-  const el=document.getElementById('tags-grid'); if(!el) return;
-  el.innerHTML=tags.map(t=>`
-    <div class="tagitem">${t}
-      <button class="tagdel" onclick="removeTag(${JSON.stringify(t)})">&#10005;</button>
-    </div>`).join('');
+// ── TAGS TAB ──
+function renderAdminTags(c) {
+  c.innerHTML = `
+    <div class="admin-section">
+      <h3>Current Tags</h3>
+      <div class="tags-grid">${topics.map(t=>`
+        <div class="tag-item">
+          <span>${t}</span>
+          <span class="tag-del" onclick="deleteTag('${t}')">×</span>
+        </div>`).join('')}
+      </div>
+      <h3>Add New Tag</h3>
+      <div class="add-tag-row">
+        <input type="text" id="new-tag-input" placeholder="New topic tag…" onkeydown="if(event.key==='Enter')doAddTag()">
+        <button class="btn-primary" onclick="doAddTag()" style="width:auto;padding:9px 20px">Add Tag</button>
+      </div>
+      <div id="tag-msg"></div>
+    </div>`;
 }
-function addTag() {
-  const input=document.getElementById('new-tag'), val=input.value.trim();
-  if(!val||tags.includes(val)){input.value='';return;}
-  tags.push(val); input.value='';
-  renderTagsGrid(); renderPubTags(); renderAddPicker(); renderManageList();
-  const t=document.getElementById('tag-toast');
-  t.style.display='block'; setTimeout(()=>t.style.display='none',1500);
+function deleteTag(t) {
+  if (!confirm(`Remove tag "${t}"? It will also be removed from all resources.`)) return;
+  topics = topics.filter(x=>x!==t);
+  resources.forEach(r => { r.topics = r.topics.filter(x=>x!==t); });
+  renderPublic();
+  renderAdminTab();
 }
-function removeTag(tag) {
-  if(!confirm(`Remove tag "${tag}"? It will be removed from all resources.`)) return;
-  tags=tags.filter(t=>t!==tag);
-  resources.forEach(r=>{r.tags=r.tags.filter(t=>t!==tag);});
-  activeTags=activeTags.filter(t=>t!==tag);
-  renderTagsGrid(); renderPubTags(); render(); renderAddPicker(); renderManageList();
+function doAddTag() {
+  const input = document.getElementById('new-tag-input');
+  const val = input?.value.trim();
+  const msgEl = document.getElementById('tag-msg');
+  if (!val) return;
+  if (topics.map(t=>t.toLowerCase()).includes(val.toLowerCase())) {
+    msgEl.innerHTML=`<div class="msg error">Tag already exists.</div>`; return;
+  }
+  topics.push(val); input.value='';
+  renderPublic();
+  renderAdminTab();
+  setTimeout(()=>{ if(msgEl) msgEl.innerHTML=''; }, 2500);
 }
 
-// Init
-renderPubTags();
-render();
+// ── SETTINGS TAB ──
+function renderAdminSettings(c) {
+  c.innerHTML = `
+    <div class="admin-section">
+      <h3>Change Admin Password</h3>
+      <div class="change-pw">
+        <div class="form-row"><label>Current Password</label><input type="password" id="cur-pw"></div>
+        <div class="form-row"><label>New Password</label><input type="password" id="new-pw"></div>
+        <div class="form-row"><label>Confirm New Password</label><input type="password" id="conf-pw"></div>
+        <div class="form-actions"><button class="btn-primary" onclick="changePw()" style="width:auto;padding:9px 20px">Update Password</button></div>
+        <div id="pw-msg"></div>
+      </div>
+      <div style="margin-top:32px;padding-top:20px;border-top:1px solid var(--border)">
+        <button class="btn-secondary" onclick="doLogout()">Log Out</button>
+      </div>
+    </div>`;
+}
+function changePw() {
+  const cur = document.getElementById('cur-pw')?.value;
+  const nw  = document.getElementById('new-pw')?.value;
+  const cf  = document.getElementById('conf-pw')?.value;
+  const msgEl = document.getElementById('pw-msg');
+  if (cur !== adminPw) { msgEl.innerHTML=`<div class="msg error">Current password is incorrect.</div>`; return; }
+  if (!nw || nw.length < 6) { msgEl.innerHTML=`<div class="msg error">New password must be at least 6 characters.</div>`; return; }
+  if (nw !== cf) { msgEl.innerHTML=`<div class="msg error">Passwords do not match.</div>`; return; }
+  adminPw = nw;
+  localStorage.setItem(ADMIN_PW_KEY, nw);
+  msgEl.innerHTML=`<div class="msg success">Password updated!</div>`;
+  setTimeout(()=>{ if(msgEl) msgEl.innerHTML=''; }, 3000);
+}
+function doLogout() { adminLoggedIn=false; closeAdmin(); }
+
+// ── INIT ──
+function openLink(url) {
+  if (!url || url === '#') return;
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+renderPublic();
 </script>
+
+<div id="admin-tab-trigger" onclick="openAdmin()" title="Admin">&#9881;</div>
 </body>
 </html>
