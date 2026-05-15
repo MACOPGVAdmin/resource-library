@@ -255,7 +255,46 @@
   .pdf-l { background: var(--green); color: #fff; }
   .vid-l { background: var(--blue); color: #fff; }
   .no-link { background: #e5e7eb; color: var(--muted); cursor: default; pointer-events: none; }
-  .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); grid-column: 1/-1; }
+  .card-url-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f5f7fa;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 7px 10px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+  .card-url-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .card-url {
+    font-size: 12px;
+    color: var(--blue);
+    word-break: break-all;
+    flex: 1;
+    text-decoration: none;
+  }
+  .card-url:hover { text-decoration: underline; }
+  .copy-btn {
+    background: var(--green);
+    color: #fff;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Metropolis', sans-serif;
+    white-space: nowrap;
+    transition: background .2s;
+  }
+  .copy-btn:hover { background: #004d3c; }
+  .copy-btn.copied { background: #2854CC; }
   .empty-state h3 { font-size: 17px; margin-bottom: 6px; color: var(--text); }
 
   /* ── MODAL ── */
@@ -653,8 +692,12 @@ function renderPublic() {
     const linkClass = r.url && r.url !== '#' ? (isVid ? 'vid-l' : 'pdf-l') : 'no-link';
     const linkText = isVid ? '▶ Watch Webinar' : '↓ View PDF';
     const linkHtml = r.url && r.url !== '#'
-      ? `<a class="card-link ${linkClass}" href="${r.url}" target="_top">${linkText}</a>`
-      : `<span class="card-link no-link">${linkText}</span>`;
+      ? `<div class="card-url-wrap">
+           <span class="card-url-label">${isVid ? '▶ Webinar' : '↓ PDF'}:</span>
+           <a class="card-url" href="${r.url}">${r.url}</a>
+           <button class="copy-btn" onclick="copyUrl('${r.url}', this)">Copy</button>
+         </div>`
+      : `<span class="card-link no-link">${isVid ? '▶ Watch Webinar' : '↓ View PDF'}</span>`;
     return `<div class="card">
       <div class="card-header">
         <div class="card-title">${r.title}</div>
@@ -1016,6 +1059,17 @@ function changePw() {
   setTimeout(()=>{ if(msgEl) msgEl.innerHTML=''; }, 3000);
 }
 function doLogout() { adminLoggedIn=false; closeAdmin(); }
+
+function copyUrl(url, btn) {
+  navigator.clipboard.writeText(url).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => {
+    btn.textContent = 'Copy failed';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+  });
+}
 
 // ── INIT ──
 function openLink(url) {
