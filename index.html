@@ -389,6 +389,17 @@ function render() {
         ${hasDesc?`<button class="desc-btn" onclick="toggleDesc(${r.id},this)">About &#9660;</button>`:''}
       </div>
       ${hasDesc?`<div class="card-desc" id="desc-${r.id}">${r.desc}</div>`:''}
+      ${v?`<div class="video-inline" id="vid-${r.id}">
+        <div class="video-inline-top">
+          <div class="video-inline-title">${r.title}</div>
+          <button class="video-close" onclick="closeVideo(${r.id})">&#10005;</button>
+        </div>
+        <div class="video-ratio" id="vid-ratio-${r.id}"></div>
+        <div class="video-fallback" id="vid-fallback-${r.id}" style="display:none">
+          <p>Unable to embed this video.</p>
+          <a id="vid-fallback-link-${r.id}" href="#" target="_top">Watch on YouTube &#8594;</a>
+        </div>
+      </div>`:''}
     </div>`;
   }).join('');
 }
