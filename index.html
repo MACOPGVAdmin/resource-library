@@ -371,36 +371,40 @@ function render() {
     ? `${resources.length} resources` : `${filtered.length} of ${resources.length} resources`;
   const el = document.getElementById('res-list');
   if (!filtered.length) { el.innerHTML='<div class="empty-state"><strong>No resources found</strong>Try adjusting your filters or search.</div>'; return; }
-  el.innerHTML = filtered.map(r => {
-    const v = r.type==='video', hasDesc = r.desc&&r.desc.trim();
-    return `<div class="resource-card">
-      <div class="card-top">
-        <div class="card-badge ${v?'badge-video':'badge-pdf'}">${v?'&#9654;':'&#8595;'}</div>
-        <div class="card-title-area">
-          <div class="card-title">${r.title}</div>
-          <div class="card-tags">${r.tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
-        </div>
-      </div>
-      <div class="card-actions">
-        ${v
-        ? `<button class="card-link vid-l" onclick="openVideo(${r.id}, ${JSON.stringify(r.url)}, ${JSON.stringify(r.title)})">Watch Webinar</button>`
-        : `<a class="card-link pdf-l" href="${r.url === '#' ? '#' : r.url}" target="_top">View PDF</a>`
-      }
-        ${hasDesc?`<button class="desc-btn" onclick="toggleDesc(${r.id},this)">About &#9660;</button>`:''}
-      </div>
-      ${hasDesc?`<div class="card-desc" id="desc-${r.id}">${r.desc}</div>`:''}
-      ${v?`<div class="video-inline" id="vid-${r.id}">
-        <div class="video-inline-top">
-          <div class="video-inline-title">${r.title}</div>
-          <button class="video-close" onclick="closeVideo(${r.id})">&#10005;</button>
-        </div>
-        <div class="video-ratio" id="vid-ratio-${r.id}"></div>
-        <div class="video-fallback" id="vid-fallback-${r.id}" style="display:none">
-          <p>Unable to embed this video.</p>
-          <a id="vid-fallback-link-${r.id}" href="#" target="_top">Watch on YouTube &#8594;</a>
-        </div>
-      </div>`:''}
-    </div>`;
+  el.innerHTML = filtered.map(function(r) {
+    var v = r.type === 'video';
+    var hasDesc = r.desc && r.desc.trim();
+    var tagsHtml = r.tags.map(function(t) { return '<span class="card-tag">' + t + '</span>'; }).join('');
+    var actionBtn = v
+      ? '<button class="card-link vid-l" onclick="openVideo(' + r.id + ', ' + JSON.stringify(r.url) + ', ' + JSON.stringify(r.title) + ')">Watch Webinar</button>'
+      : '<a class="card-link pdf-l" href="' + (r.url === '#' ? '#' : r.url) + '" target="_top">View PDF</a>';
+    var descBtn = hasDesc ? '<button class="desc-btn" onclick="toggleDesc(' + r.id + ',this)">About &#9660;</button>' : '';
+    var descHtml = hasDesc ? '<div class="card-desc" id="desc-' + r.id + '">' + r.desc + '</div>' : '';
+    var videoHtml = v ? (
+      '<div class="video-inline" id="vid-' + r.id + '">' +
+        '<div class="video-inline-top">' +
+          '<div class="video-inline-title">' + r.title + '</div>' +
+          '<button class="video-close" onclick="closeVideo(' + r.id + ')">&#10005;</button>' +
+        '</div>' +
+        '<div class="video-ratio" id="vid-ratio-' + r.id + '"></div>' +
+        '<div class="video-fallback" id="vid-fallback-' + r.id + '" style="display:none">' +
+          '<p>Unable to embed this video.</p>' +
+          '<a id="vid-fallback-link-' + r.id + '" href="' + r.url + '" target="_top">Watch on YouTube &#8594;</a>' +
+        '</div>' +
+      '</div>'
+    ) : '';
+    return '<div class="resource-card">' +
+      '<div class="card-top">' +
+        '<div class="card-badge ' + (v ? 'badge-video' : 'badge-pdf') + '">' + (v ? '&#9654;' : '&#8595;') + '</div>' +
+        '<div class="card-title-area">' +
+          '<div class="card-title">' + r.title + '</div>' +
+          '<div class="card-tags">' + tagsHtml + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card-actions">' + actionBtn + descBtn + '</div>' +
+      descHtml +
+      videoHtml +
+    '</div>';
   }).join('');
 }
 function toggleDesc(id, btn) {
